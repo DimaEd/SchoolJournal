@@ -19,7 +19,7 @@
         <hibernate.entitymanager>5.4.2.Final</hibernate.entitymanager>
         <com.h2.driver>1.4.197</com.h2.driver>
         <javax.servlet>4.0.1</javax.servlet>
-        <jackson.core>2.9.9</jackson.core>
+        <jackson.core>2.11.0</jackson.core>
         <hibernate.validator>6.0.16.Final</hibernate.validator>
         <dozer>5.5.1</dozer>
         <logback>1.2.3</logback>
