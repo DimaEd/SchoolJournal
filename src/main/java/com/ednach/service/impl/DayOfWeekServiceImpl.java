@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 @Transactional
-public class DayOfWeekServiseImpl implements DayOfWeekService {
+public class DayOfWeekServiceImpl implements DayOfWeekService {
 
     private final LocalizedMessageSource localizedMessageSource;
     private final DayOfWeekRepository dayOfWeekRepository;

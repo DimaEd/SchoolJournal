@@ -54,7 +54,7 @@ public class GradeController {
      */
     @RequestMapping(value = "/schoolboy/{id}", method = RequestMethod.GET)
     public ResponseEntity<List<GradeResponseDto>> getAllGrades(@PathVariable Long id) {
-        Schoolboy b = schoolboyService.getOne(id);
+        Schoolboy b = schoolboyService.findById(id);
         final List<Grade> grades = gradeService.findBySchoolboy(b);
         final List<GradeResponseDto> gradeResponseDtoList = grades.stream()
                 .map((grade) -> mapper.map(grade, GradeResponseDto.class))

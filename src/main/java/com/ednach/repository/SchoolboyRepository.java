@@ -1,6 +1,7 @@
 package com.ednach.repository;
 
 import com.ednach.model.Schoolboy;
+import com.ednach.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -8,7 +9,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface SchoolboyRepository extends JpaRepository<Schoolboy, Long> {
 
+    Schoolboy findByUser(User user);
+
     boolean existsById(Long id);
 
-    Schoolboy findSchoolboyById(Long id);
+    boolean existsByUser(User user);
 }

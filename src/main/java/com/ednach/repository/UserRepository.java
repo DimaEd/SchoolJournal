@@ -19,11 +19,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsByFirstName(String firstName);
 
+    boolean existsByLastName(String lastName);
+
     @Query("SELECT DISTINCT u FROM User u JOIN FETCH u.roles")
     User findByFirstName(String firstName);
 
-    @Query("SELECT DISTINCT u FROM User u JOIN FETCH u.roles ORDER BY u.id")
-    List<User> findAllWithRoles();
+//    @Query("SELECT DISTINCT u FROM User u JOIN FETCH u.roles ORDER BY u.id")
+//    List<User> findAllWithRoles();
 
     @Query("SELECT DISTINCT u FROM User u JOIN FETCH u.roles WHERE u.id=:id ORDER BY u.id")
     Optional<User> findByIdWithRoles(@Param("id") Long id);

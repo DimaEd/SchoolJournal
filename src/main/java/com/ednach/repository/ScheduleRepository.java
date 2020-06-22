@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
-    boolean existsById(Long id);
+    boolean existsByDayOfWeek(Long id);
 
     Schedule findScheduleById(Long id);
 

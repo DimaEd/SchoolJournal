@@ -44,7 +44,6 @@ public class GradeServiceImpl implements GradeService {
     @Override
     public Grade save(Grade grade) {
         validate(grade.getId() != null, localizedMessageSource.getMessage("error.grade.notHaveId", new Object[]{}));
-        validate(gradeRepository.existsBySubject(grade.getSubject()), localizedMessageSource.getMessage("error.grade.subject.notUnique", new Object[]{}));
         return gradeRepository.saveAndFlush(grade);
     }
 
@@ -60,12 +59,15 @@ public class GradeServiceImpl implements GradeService {
 
     @Override
     public void deleteById(Long id) {
+        findById(id);
         gradeRepository.deleteById(id);
     }
 
     @Override
     public void delete(Grade grade) {
+        final Long id = grade.getId();
         validate(grade.getId() == null, localizedMessageSource.getMessage("error.grade.haveId", new Object[]{}));
+       findById(id);
         gradeRepository.delete(grade);
     }
 

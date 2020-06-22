@@ -1,7 +1,6 @@
 package com.ednach.service.impl;
 
 import com.ednach.component.LocalizedMessageSource;
-import com.ednach.repository.ClassroomRepository;
 import com.ednach.repository.ScheduleRepository;
 import com.ednach.model.Classroom;
 import com.ednach.model.DayOfWeek;
@@ -26,7 +25,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     final ClassroomService classroomService;
     final DisciplineService disciplineService;
     final DayOfWeekService dayOfWeekService;
-    final GradeService gradeService;
     final LocalizedMessageSource localizedMessageSource;
 
     @Override
@@ -47,7 +45,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public Schedule save(Schedule schedule) {
         validate(schedule.getId() != null, localizedMessageSource.getMessage("error.schedule.notHaveId", new Object[]{}));
-      //  validate(scheduleRepository.existsById(schedule.getId()), localizedMessageSource.getMessage("error.schedule.id.notUnique", new Object[]{}));
+        validate(scheduleRepository.existsByDayOfWeek(schedule.getId()), localizedMessageSource.getMessage("error.schedule.dayOfWeek.notUnique", new Object[]{}));
         return saveAndFlush(schedule);
     }
 
@@ -57,18 +55,21 @@ public class ScheduleServiceImpl implements ScheduleService {
         validate(id == null, localizedMessageSource.getMessage("error.schedule.haveId", new Object[]{}));
         final Schedule duplicateSchedule = scheduleRepository.findScheduleById(schedule.getId());
         final boolean isDuplicateExists = duplicateSchedule != null && !Objects.equals(duplicateSchedule.getId(), id);
-        validate(isDuplicateExists, localizedMessageSource.getMessage("error.schedule.id.notUnique", new Object[]{}));
+        validate(isDuplicateExists, localizedMessageSource.getMessage("error.schedule.dayOfWeek.notUnique", new Object[]{}));
         return saveAndFlush(schedule);
     }
 
     @Override
     public void delete(Schedule schedule) {
+        final Long id = schedule.getId();
         validate(schedule.getId() == null, localizedMessageSource.getMessage("error.schedule.haveId", new Object[]{}));
+        findById(id);
         scheduleRepository.delete(schedule);
     }
 
     @Override
     public void deleteById(Long id) {
+        findById(id);
         scheduleRepository.deleteById(id);
     }
 
@@ -77,7 +78,6 @@ public class ScheduleServiceImpl implements ScheduleService {
         validate(schedule.getDiscipline() == null || schedule.getDiscipline().getId() == null, localizedMessageSource.getMessage("error.schedule.discipline.isNull", new Object[]{}));
         validate(schedule.getDayOfWeek() == null || schedule.getDayOfWeek().getId() == null, localizedMessageSource.getMessage("error.schedule.dayOfWeek.isNull", new Object[]{}));
 
-        //     validate(sin.getPoints()==null , localizedMessageSource.getMessage("error.sin.points.isEmpty",new Object[]{}));
         schedule.setClassroom(classroomService.findById(schedule.getClassroom().getId()));
         schedule.setDiscipline(disciplineService.findById(schedule.getDiscipline().getId()));
         schedule.setDayOfWeek(dayOfWeekService.findById(schedule.getDayOfWeek().getId()));

@@ -38,7 +38,6 @@ public class Sin {
     private String typeSin;
 
     @NotNull(message = "{sin.points.notNull}")
-  //  @NotEmpty(message = "{sin.points.notEmpty}")
     private Long points;
 
     public Sin() {

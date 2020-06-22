@@ -11,8 +11,6 @@ public interface SchoolboyService {
 
     List<Schoolboy> findAll();
 
-    Schoolboy getOne (long id);
-
     Schoolboy findById(Long id);
 
     Schoolboy save(Schoolboy schoolboy);

@@ -5,7 +5,6 @@ import com.ednach.service.TeacherService;
 import com.ednach.component.LocalizedMessageSource;
 import com.ednach.model.Classroom;
 import com.ednach.service.ClassroomService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -96,7 +95,8 @@ public class ClassroomServiceImpl implements ClassroomService {
      */
     @Override
     public void deleteById(Long id) {
-        classroomRepository.findById(id);
+        findById(id);
+        classroomRepository.deleteById(id);
     }
 
     /**
@@ -106,7 +106,10 @@ public class ClassroomServiceImpl implements ClassroomService {
      */
     @Override
     public void delete(Classroom classroom) {
+        final Long id = classroom.getId();
         validate(classroom.getId() == null, localizedMessageSource.getMessage("error.classroom.haveId", new Object[]{}));
+        findById(id);
+        classroomRepository.delete(classroom);
     }
 
     private Classroom saveAndFlush(Classroom classroom) {

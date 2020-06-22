@@ -50,9 +50,6 @@ public class SinServiceImpl implements SinService {
     @Override
     public Sin save(Sin sin) {
         validate(sin.getId() != null, localizedMessageSource.getMessage("error.sin.notHaveId", new Object[]{}));
-        validate(sinRepository.existsByTypeSin(sin.getTypeSin()), localizedMessageSource.getMessage("error.sin.typeSin.notUnique", new Object[]{}));
-        validate(sin.getPoints()==null , localizedMessageSource.getMessage("error.sin.points.isEmpty",new Object[]{}));
-
         return saveAndFlush(sin);
     }
 
@@ -68,19 +65,21 @@ public class SinServiceImpl implements SinService {
 
     @Override
     public void delete(Sin sin) {
+        final Long id = sin.getId();
         validate(sin.getId() == null, localizedMessageSource.getMessage("error.sin.haveId", new Object[]{}));
+       findById(id);
         sinRepository.delete(sin);
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteById(Long id) {
+        findById(id);
         sinRepository.deleteById(id);
     }
 
     private Sin saveAndFlush(Sin sin) {
         validate(sin.getTeacher() == null || sin.getTeacher().getId() == null, localizedMessageSource.getMessage("error.sin.teacher.isNull", new Object[]{}));
         validate(sin.getSchoolboy() == null || sin.getSchoolboy().getId() == null, localizedMessageSource.getMessage("error.sin.schoolboy.isNull", new Object[]{}));
-  //     validate(sin.getPoints()==null , localizedMessageSource.getMessage("error.sin.points.isEmpty",new Object[]{}));
         sin.setTeacher(teacherService.findById(sin.getTeacher().getId()));
         sin.setSchoolboy(schoolboyService.findById(sin.getSchoolboy().getId()));
         return sinRepository.saveAndFlush(sin);

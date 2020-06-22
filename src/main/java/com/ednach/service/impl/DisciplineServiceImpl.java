@@ -47,9 +47,7 @@ public class DisciplineServiceImpl implements DisciplineService {
         final Long id = discipline.getId();
         validate(id == null, localizedMessageSource.getMessage("error.discipline.haveId", new Object[]{}));
         final Discipline duplicateDiscipline = disciplineRepository.findByNameSubject(discipline.getNameSubject());
-
         final boolean isDuplicateExists = duplicateDiscipline != null && !Objects.equals(duplicateDiscipline.getId(), id);
-
         validate(isDuplicateExists, localizedMessageSource.getMessage("error.discipline.subject.notUnique", new Object[]{}));
 
         return saveAndFlush(discipline);
@@ -57,8 +55,9 @@ public class DisciplineServiceImpl implements DisciplineService {
 
     @Override
     public void delete(Discipline discipline) {
-        validate(discipline.getId() == null, localizedMessageSource.getMessage("error.discipline.haveId", new Object[]{}));
-
+        final Long id = discipline.getId();
+        validate(id == null, localizedMessageSource.getMessage("error.discipline.haveId", new Object[]{}));
+        findById(id);
         disciplineRepository.delete(discipline);
 
 
@@ -66,18 +65,15 @@ public class DisciplineServiceImpl implements DisciplineService {
 
     @Override
     public void deleteById(Long id) {
+        findById(id);
         disciplineRepository.deleteById(id);
 
     }
 
     private Discipline saveAndFlush(Discipline discipline) {
-
         validate(discipline.getTeacher() == null || discipline.getTeacher().getId() == null, localizedMessageSource.getMessage("error.discipline.teacher.isNull", new Object[]{}));
-
         discipline.setTeacher(teacherService.findById(discipline.getTeacher().getId()));
-
         return disciplineRepository.saveAndFlush(discipline);
-
     }
 
     private void validate(boolean expression, String errorMessage) {

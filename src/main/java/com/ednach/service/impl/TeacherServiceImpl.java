@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Implementation of service interface for Teacher entity
@@ -19,9 +20,9 @@ import java.util.Objects;
 @Transactional
 public class TeacherServiceImpl implements TeacherService {
 
-    private final LocalizedMessageSource localizedMessageSource;
-    private final UserService userService;
-    private final TeacherRepository teacherRepository;
+    final LocalizedMessageSource localizedMessageSource;
+    final UserService userService;
+    final TeacherRepository teacherRepository;
 
     public TeacherServiceImpl(LocalizedMessageSource localizedMessageSource, UserService userService, TeacherRepository teacherRepository) {
         this.localizedMessageSource = localizedMessageSource;
@@ -42,7 +43,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Teacher save(Teacher teacher) {
         validate(teacher.getId() != null, localizedMessageSource.getMessage("error.teacher.notHaveId", new Object[]{}));
-      //  validate(teacherRepository.existsById(teacher.getId()), localizedMessageSource.getMessage("error.teacher.teacherId.notUnique", new Object[]{}));
+        validate(teacherRepository.existsByUser(teacher.getUser()), localizedMessageSource.getMessage("error.teacher.user.notUnique", new Object[]{}));
         return saveAndFlush(teacher);
     }
 
@@ -50,25 +51,28 @@ public class TeacherServiceImpl implements TeacherService {
     public Teacher update(Teacher teacher) {
         final Long id = teacher.getId();
         validate(id == null, localizedMessageSource.getMessage("error.teacher.haveId", new Object[]{}));
-        final Teacher duplicateTeacher = teacherRepository.findTeacherById(teacher.getId());
+        final Teacher duplicateTeacher = teacherRepository.findByUser(teacher.getUser());
         final boolean isDuplicateExists = duplicateTeacher != null && !Objects.equals(duplicateTeacher.getId(), id);
-        validate(isDuplicateExists, localizedMessageSource.getMessage("error.teacher.teacherId.notUnique", new Object[]{}));
+        validate(isDuplicateExists, localizedMessageSource.getMessage("error.teacher.user.notUnique", new Object[]{}));
         return saveAndFlush(teacher);
     }
 
     @Override
     public void delete(Teacher teacher) {
-        validate(teacher.getId() == null, localizedMessageSource.getMessage("error.teacher.haveId", new Object[]{}));
+        final Long id = teacher.getId();
+        validate(id == null, localizedMessageSource.getMessage("error.teacher.haveId", new Object[]{}));
+       findById(id);
         teacherRepository.delete(teacher);
     }
 
     @Override
     public void deleteById(Long id) {
+        findById(id);
         teacherRepository.deleteById(id);
     }
 
     private Teacher saveAndFlush(Teacher teacher) {
-        validate( teacher.getUser().getId() == null, localizedMessageSource.getMessage("error.teacher.user.isNull", new Object[]{}));
+        validate(teacher.getUser().getId() == null, localizedMessageSource.getMessage("error.teacher.user.isNull", new Object[]{}));
         teacher.setUser(userService.findById(teacher.getUser().getId()));
         return teacherRepository.saveAndFlush(teacher);
     }

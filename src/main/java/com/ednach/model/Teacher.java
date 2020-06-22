@@ -18,7 +18,6 @@ public class Teacher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-  //  @NotNull(message = "{teacher.id.notNull}")
     private Long id;
 
     @OneToMany(mappedBy = "teacher",fetch = FetchType.EAGER)
@@ -44,5 +43,8 @@ public class Teacher {
     public Teacher(Long id, User user) {
         this.id = id;
         this.user = user;
+    }
+    public Teacher(Long id) {
+        this.id = id;
     }
 }

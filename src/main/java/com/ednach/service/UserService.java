@@ -16,8 +16,6 @@ public interface UserService {
 
     User findByFirstName(String firstName);
 
-    List<User> findByRoles(Role role);
-
     User save(User user);
 
     User update(User user);

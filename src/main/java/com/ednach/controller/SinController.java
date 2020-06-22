@@ -82,7 +82,7 @@ public class SinController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.OK)
     public void delete(@PathVariable Long id) {
-        sinService.delete(id);
+        sinService.deleteById(id);
     }
 
     private Sin getSin(SinRequestDto sinRequestDto) {

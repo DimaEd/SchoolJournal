@@ -47,14 +47,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(User user) {
         validate(user.getId() != null, localizedMessageSource.getMessage("error.user.notHaveId", new Object[]{}));
-        validate(userRepository.existsByFirstName(user.getFirstName()),localizedMessageSource.getMessage("error.user.firstName.notUnique",new Object[]{}));
-        validate(userRepository.existsByPassword(user.getPassword()), localizedMessageSource.getMessage("error.user.password.notUnique", new Object[]{}));
+        validate(userRepository.existsByFirstName(user.getFirstName())&&userRepository.existsByLastName(user.getLastName()),localizedMessageSource.getMessage("error.user.firstNameWithLastName.notUnique",new Object[]{}));
         return saveAndFlush(user);
-    }
-
-    @Override
-    public List<User> findByRoles(Role roles) {
-        return userRepository.findUserByRoles(roles);
     }
 
     @Override
@@ -63,18 +57,22 @@ public class UserServiceImpl implements UserService {
         validate(id == null, localizedMessageSource.getMessage("error.user.haveId", new Object[]{}));
         final User duplicateUser = userRepository.findByFirstName(user.getFirstName());
         final boolean isDuplicateExists = duplicateUser != null && !Objects.equals(duplicateUser.getId(), id);
-        validate(userRepository.findByFirstName(user.getFirstName())== null, localizedMessageSource.getMessage("error.user.firstName.notUnique", new Object[]{}));
+        validate(isDuplicateExists, localizedMessageSource.getMessage("error.user.firstName.notUnique", new Object[]{}));
+        findById(id);
         return saveAndFlush(user);
     }
 
     @Override
     public void delete(User user) {
-        validate(user.getId() == null, localizedMessageSource.getMessage("error.user.haveId", new Object[]{}));
+        final Long id = user.getId();
+        validate(id == null, localizedMessageSource.getMessage("error.user.haveId", new Object[]{}));
+        findById(id);
         userRepository.delete(user);
     }
 
     @Override
     public void deleteById(Long id) {
+        findById(id);
         userRepository.deleteById(id);
     }
 

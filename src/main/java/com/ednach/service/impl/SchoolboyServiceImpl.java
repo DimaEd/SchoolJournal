@@ -26,24 +26,19 @@ public class SchoolboyServiceImpl implements SchoolboyService {
     final LocalizedMessageSource localizedMessageSource;
 
     @Override
-    public Schoolboy getOne(long id) {
-        return schoolboyRepository.getOne(id);
-    }
-
-    @Override
     public List<Schoolboy> findAll() {
         return schoolboyRepository.findAll();
     }
 
     @Override
     public Schoolboy findById(Long id) {
-        return schoolboyRepository.findById(id).orElseThrow(() -> new RuntimeException(localizedMessageSource.getMessage("error.user.notExist", new Object[]{})));
+        return schoolboyRepository.findById(id).orElseThrow(() -> new RuntimeException(localizedMessageSource.getMessage("error.schoolboy.notExist", new Object[]{})));
     }
 
     @Override
     public Schoolboy save(Schoolboy schoolboy) {
         validate(schoolboy.getId() != null, localizedMessageSource.getMessage("error.schoolboy.notHaveId", new Object[]{}));
- //      validate(schoolboyRepository.existsById(schoolboy.getId()), localizedMessageSource.getMessage("error.schoolboy.id.notUnique", new Object[]{}));
+       validate(schoolboyRepository.existsByUser(schoolboy.getUser()), localizedMessageSource.getMessage("error.schoolboy.user.notUnique", new Object[]{}));
         return saveAndFlush(schoolboy);
     }
 
@@ -51,20 +46,24 @@ public class SchoolboyServiceImpl implements SchoolboyService {
     public Schoolboy update(Schoolboy schoolboy) {
         final Long id = schoolboy.getId();
         validate(id == null, localizedMessageSource.getMessage("error.schoolboy.haveId", new Object[]{}));
-        final Schoolboy duplicateSchoolboy = schoolboyRepository.findSchoolboyById(schoolboy.getId());
+        final Schoolboy duplicateSchoolboy = schoolboyRepository.findByUser(schoolboy.getUser());
         final boolean isDuplicateExists = duplicateSchoolboy != null && !Objects.equals(duplicateSchoolboy.getId(), id);
-        validate(isDuplicateExists, localizedMessageSource.getMessage("error.schoolboy.id.notUnique", new Object[]{}));
+        validate(isDuplicateExists, localizedMessageSource.getMessage("error.schoolboy.user.notUnique", new Object[]{}));
         return saveAndFlush(schoolboy);
     }
 
     @Override
     public void delete(Schoolboy schoolboy) {
+        final Long id = schoolboy.getId();
         validate(schoolboy.getId() == null, localizedMessageSource.getMessage("error.schoolboy.haveId", new Object[]{}));
+       findById(id);
         schoolboyRepository.delete(schoolboy);
     }
 
     @Override
     public void deleteById(Long id) {
+        findById(id);
+        schoolboyRepository.deleteById(id);
     }
 
     private Schoolboy saveAndFlush(Schoolboy schoolboy) {

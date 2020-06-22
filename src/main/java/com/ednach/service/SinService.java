@@ -24,5 +24,5 @@ public interface SinService {
 
     void delete(Sin sin);
 
-    void delete(Long id);
+    void deleteById(Long id);
 }
