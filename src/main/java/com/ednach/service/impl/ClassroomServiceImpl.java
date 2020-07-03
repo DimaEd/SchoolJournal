@@ -83,6 +83,7 @@ public class ClassroomServiceImpl implements ClassroomService {
         final Long id = classroom.getId();
         validate(id == null, localizedMessageSource.getMessage("error.classroom.haveId", new Object[]{}));
         final Classroom duplicateClassroom = classroomRepository.findByClassName(classroom.getClassName());
+        findById(id);
         final boolean isDuplicateExists = duplicateClassroom != null && !Objects.equals(duplicateClassroom.getId(), id);
         validate(isDuplicateExists, localizedMessageSource.getMessage("error.classroom.className.notUnique", new Object[]{}));
         return saveAndFlush(classroom);

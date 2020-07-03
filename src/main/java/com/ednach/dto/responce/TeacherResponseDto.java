@@ -16,6 +16,4 @@ public class TeacherResponseDto {
 
     private UserResponseDto user;
 
-    private Set<DisciplineResponseDto> discipline;
-
 }

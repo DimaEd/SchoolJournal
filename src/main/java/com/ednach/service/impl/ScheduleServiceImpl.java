@@ -45,7 +45,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public Schedule save(Schedule schedule) {
         validate(schedule.getId() != null, localizedMessageSource.getMessage("error.schedule.notHaveId", new Object[]{}));
-        validate(scheduleRepository.existsByDayOfWeek(schedule.getId()), localizedMessageSource.getMessage("error.schedule.dayOfWeek.notUnique", new Object[]{}));
         return saveAndFlush(schedule);
     }
 
@@ -53,9 +52,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     public Schedule update(Schedule schedule) {
         final Long id = schedule.getId();
         validate(id == null, localizedMessageSource.getMessage("error.schedule.haveId", new Object[]{}));
-        final Schedule duplicateSchedule = scheduleRepository.findScheduleById(schedule.getId());
-        final boolean isDuplicateExists = duplicateSchedule != null && !Objects.equals(duplicateSchedule.getId(), id);
-        validate(isDuplicateExists, localizedMessageSource.getMessage("error.schedule.dayOfWeek.notUnique", new Object[]{}));
+        findById(id);
         return saveAndFlush(schedule);
     }
 

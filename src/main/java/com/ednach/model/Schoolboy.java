@@ -25,7 +25,7 @@ public class Schoolboy {
     @NotNull(message = "{schoolboy.user.notNull}")
     private User user;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "classroom_id", referencedColumnName = "id")
     @NotNull(message = "{schoolboy.classroom.notNull}")
     private Classroom classroom;

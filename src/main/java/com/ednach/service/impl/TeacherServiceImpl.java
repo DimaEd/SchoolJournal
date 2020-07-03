@@ -52,6 +52,7 @@ public class TeacherServiceImpl implements TeacherService {
         final Long id = teacher.getId();
         validate(id == null, localizedMessageSource.getMessage("error.teacher.haveId", new Object[]{}));
         final Teacher duplicateTeacher = teacherRepository.findByUser(teacher.getUser());
+        findById(id);
         final boolean isDuplicateExists = duplicateTeacher != null && !Objects.equals(duplicateTeacher.getId(), id);
         validate(isDuplicateExists, localizedMessageSource.getMessage("error.teacher.user.notUnique", new Object[]{}));
         return saveAndFlush(teacher);

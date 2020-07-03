@@ -46,6 +46,7 @@ public class DisciplineServiceImpl implements DisciplineService {
     public Discipline update(Discipline discipline) {
         final Long id = discipline.getId();
         validate(id == null, localizedMessageSource.getMessage("error.discipline.haveId", new Object[]{}));
+        findById(id);
         final Discipline duplicateDiscipline = disciplineRepository.findByNameSubject(discipline.getNameSubject());
         final boolean isDuplicateExists = duplicateDiscipline != null && !Objects.equals(duplicateDiscipline.getId(), id);
         validate(isDuplicateExists, localizedMessageSource.getMessage("error.discipline.subject.notUnique", new Object[]{}));

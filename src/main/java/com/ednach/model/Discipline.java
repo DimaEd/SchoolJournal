@@ -35,4 +35,12 @@ public class Discipline {
 
     @OneToMany(mappedBy = "discipline")
     private Set<Schedule> schedules;
+
+    @OneToMany(mappedBy = "discipline")
+    private Set<Grade> grades;
+
+    public Discipline() {
+    }
+
+
 }

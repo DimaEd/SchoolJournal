@@ -20,7 +20,7 @@ public class Teacher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "teacher",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "teacher")
     private Set<Discipline> discipline;
 
     @OneToOne(mappedBy = "teacher")

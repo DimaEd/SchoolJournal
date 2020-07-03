@@ -22,10 +22,10 @@ public class Classroom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "classroom")
-    private Schoolboy schoolboy;
+    @OneToMany(mappedBy = "classroom")
+    private Set<Schoolboy> schoolboys;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id", referencedColumnName = "id")
     @NotNull(message = "{classroom.teacher.notNull}")
     private Teacher teacher;
@@ -42,9 +42,13 @@ public class Classroom {
     public Classroom() {
     }
 
-    public Classroom(Long id, Schoolboy schoolboy, Teacher teacher, String className) {
+    public Classroom(String className) {
+        this.className=className;
+    }
+
+    public Classroom(Long id, Set<Schoolboy> schoolboys, Teacher teacher, String className) {
         this.id = id;
-        this.schoolboy = schoolboy;
+        this.schoolboys = schoolboys;
         this.teacher = teacher;
         this.className = className;
     }

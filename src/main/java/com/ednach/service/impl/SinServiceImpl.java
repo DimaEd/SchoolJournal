@@ -57,9 +57,7 @@ public class SinServiceImpl implements SinService {
     public Sin update(Sin sin) {
         final Long id = sin.getId();
         validate(id == null, localizedMessageSource.getMessage("error.sin.haveId", new Object[]{}));
-        final Sin duplicateSin = sinRepository.findByTypeSin(sin.getTypeSin());
-        final boolean isDuplicateExists = duplicateSin != null && !Objects.equals(duplicateSin.getId(), id);
-        validate(isDuplicateExists, localizedMessageSource.getMessage("error.sin.typeSin.notUnique", new Object[]{}));
+        findById(id);
         return saveAndFlush(sin);
     }
 
@@ -67,7 +65,7 @@ public class SinServiceImpl implements SinService {
     public void delete(Sin sin) {
         final Long id = sin.getId();
         validate(sin.getId() == null, localizedMessageSource.getMessage("error.sin.haveId", new Object[]{}));
-       findById(id);
+        findById(id);
         sinRepository.delete(sin);
     }
 

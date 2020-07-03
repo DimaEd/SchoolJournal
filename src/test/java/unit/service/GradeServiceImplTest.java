@@ -1,10 +1,12 @@
 package unit.service;
 
 import com.ednach.component.LocalizedMessageSource;
+import com.ednach.model.Discipline;
 import com.ednach.model.Grade;
 import com.ednach.model.Schoolboy;
 import com.ednach.model.Teacher;
 import com.ednach.repository.GradeRepository;
+import com.ednach.service.DisciplineService;
 import com.ednach.service.SchoolboyService;
 import com.ednach.service.TeacherService;
 import com.ednach.service.impl.GradeServiceImpl;
@@ -33,6 +35,9 @@ class GradeServiceImplTest {
 
     @Mock
     private TeacherService teacherService;
+
+    @Mock
+    private DisciplineService disciplineService;
 
     @Mock
     private SchoolboyService schoolboyService;
@@ -70,6 +75,9 @@ class GradeServiceImplTest {
         schoolboy.setId(1L);
         final Teacher teacher = new Teacher();
         teacher.setId(1L);
+        final Discipline discipline = new Discipline();
+        discipline.setId(1L);
+        grade.setDiscipline(discipline);
         grade.setSchoolboy(schoolboy);
         grade.setTeacher(teacher);
         when(gradeRepository.saveAndFlush(grade)).thenReturn(grade);
@@ -84,11 +92,13 @@ class GradeServiceImplTest {
         schoolboy.setId(1L);
         final Teacher teacher = new Teacher();
         teacher.setId(1L);
+        final Discipline discipline = new Discipline();
+        discipline.setId(1L);
+        grade.setDiscipline(discipline);
         grade.setSchoolboy(schoolboy);
         grade.setTeacher(teacher);
+        when(gradeRepository.findById(1L)).thenReturn(Optional.of(grade));
         when(gradeRepository.saveAndFlush(grade)).thenReturn(grade);
-        when(teacherService.findById(1L)).thenReturn(teacher);
-        when(schoolboyService.findById(1L)).thenReturn(schoolboy);
         assertEquals(gradeService.update(grade),grade);
     }
 

@@ -119,9 +119,11 @@ public class ScheduleController {
     private Schedule getSchedule(ScheduleRequestDto scheduleRequestDto){
         final Schedule schedule = mapper.map(scheduleRequestDto, Schedule.class);
        final Classroom classroom = new Classroom();
+       classroom.setId(scheduleRequestDto.getClassroomId());
        final Discipline discipline = new Discipline();
+       discipline.setId(scheduleRequestDto.getDisciplineId());
        final DayOfWeek dayOfWeek = new DayOfWeek();
-
+        dayOfWeek.setId(scheduleRequestDto.getDayOfWeekId());
        discipline.setId(scheduleRequestDto.getDisciplineId());
         classroom.setId(scheduleRequestDto.getClassroomId());
         dayOfWeek.setId(scheduleRequestDto.getDayOfWeekId());

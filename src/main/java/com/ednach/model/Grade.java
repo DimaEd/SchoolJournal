@@ -27,18 +27,17 @@ public class Grade {
     private Schoolboy schoolboy;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "teachers_id", nullable = false)
-    @NotNull(message = "{grade.teacher.notNull}")
-    private Teacher teacher;
-
-    @Column(unique = true, nullable = false)
-    @NotNull(message = "{grade.subject.notNull}")
-    @NotEmpty(message = "{grade.subject.notEmpty}")
-    @Size(min = 3, max = 50, message = "{grade.subject.size}")
-    private String subject;
+    @JoinColumn(name = "discipline_id", nullable = false)
+    @NotNull(message = "{grade.discipline.notNull}")
+    private Discipline discipline;
 
     @NotNull(message = "{grade.mark.notNull}")
     private Long mark;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "teachers_id", nullable = false)
+    @NotNull(message = "{grade.teacher.notNull}")
+    private Teacher teacher;
 
     @Column(unique = true, nullable = false)
     @NotNull(message = "{grade.date.notNull}")
@@ -48,11 +47,11 @@ public class Grade {
 
     public Grade(){}
 
-    public Grade(Long id,Schoolboy schoolboy,Teacher teacher,String subject,Long mark, String date) {
+    public Grade(Long id,Schoolboy schoolboy,Teacher teacher, Discipline discipline,Long mark, String date) {
         this.id=id;
         this.schoolboy = schoolboy;
         this.teacher = teacher;
-        this.subject = subject;
+        this.discipline = discipline ;
         this.mark = mark;
         this.date = date;
     }

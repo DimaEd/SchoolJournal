@@ -20,9 +20,6 @@ public class ScheduleRequestDto {
     @NotNull(message = "{schedule.discipline.notNull}")
     private Long disciplineId;
 
-    @NotNull(message = "{schedule.numLesson.notNull}")
-    private Long numLesson;
-
     @NotNull(message = "schedule.dayOfWeek.notNull")
     private Long dayOfWeekId;
 }

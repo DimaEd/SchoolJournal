@@ -48,6 +48,7 @@ public class SchoolboyServiceImpl implements SchoolboyService {
         validate(id == null, localizedMessageSource.getMessage("error.schoolboy.haveId", new Object[]{}));
         final Schoolboy duplicateSchoolboy = schoolboyRepository.findByUser(schoolboy.getUser());
         final boolean isDuplicateExists = duplicateSchoolboy != null && !Objects.equals(duplicateSchoolboy.getId(), id);
+       findById(id);
         validate(isDuplicateExists, localizedMessageSource.getMessage("error.schoolboy.user.notUnique", new Object[]{}));
         return saveAndFlush(schoolboy);
     }

@@ -30,8 +30,6 @@ public class Schedule {
     @NotNull(message = "{schedule.dayWeek.notNull}")
     private DayOfWeek dayOfWeek;
 
-    private Long numLesson;
-
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "discipline_id", nullable = false)
     @NotNull(message = "{schedule.discipline.notNull}")
@@ -42,11 +40,10 @@ public class Schedule {
     public Schedule() {
     }
 
-    public Schedule(Long id, Classroom classroom, Discipline discipline,Long numLesson, DayOfWeek dayOfWeek) {
+    public Schedule(Long id, Classroom classroom, Discipline discipline, DayOfWeek dayOfWeek) {
         this.id = id;
         this.classroom = classroom;
         this.discipline = discipline;
-        this.numLesson = numLesson;
         this.dayOfWeek = dayOfWeek;
     }
 }

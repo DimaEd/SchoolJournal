@@ -3,6 +3,7 @@ package com.ednach.service.impl;
 import com.ednach.component.LocalizedMessageSource;
 import com.ednach.model.Grade;
 import com.ednach.model.Schoolboy;
+import com.ednach.service.DisciplineService;
 import com.ednach.service.GradeService;
 import com.ednach.service.SchoolboyService;
 import com.ednach.service.TeacherService;
@@ -24,6 +25,7 @@ public class GradeServiceImpl implements GradeService {
     final GradeRepository gradeRepository;
     final TeacherService teacherService;
     final SchoolboyService schoolboyService;
+    final DisciplineService disciplineService;
     final LocalizedMessageSource localizedMessageSource;
 
     @Override
@@ -51,10 +53,8 @@ public class GradeServiceImpl implements GradeService {
     public Grade update(Grade grade) {
         final Long id = grade.getId();
         validate(id == null, localizedMessageSource.getMessage("error.grade.haveId", new Object[]{}));
-         final Grade duplicateGrade = gradeRepository.findBySubject(grade.getSubject());
-        final boolean isDuplicateExists = duplicateGrade != null && !Objects.equals(duplicateGrade.getId(), id);
-        validate(isDuplicateExists, localizedMessageSource.getMessage("error.grade.subject.notUnique", new Object[]{}));
-        return saveAndFlush(grade);
+        findById(id);
+         return saveAndFlush(grade);
     }
 
     @Override
@@ -74,6 +74,8 @@ public class GradeServiceImpl implements GradeService {
     private Grade saveAndFlush(Grade grade) {
         validate(grade.getTeacher() == null|| grade.getTeacher().getId()==null, localizedMessageSource.getMessage("error.grade.teacher.isNull", new Object[]{}));
         validate(grade.getSchoolboy() == null || (grade.getSchoolboy().getId() == null), localizedMessageSource.getMessage("error.grade.user.isNull", new Object[]{}));
+        validate(grade.getDiscipline() == null || (grade.getDiscipline().getId() == null), localizedMessageSource.getMessage("error.grade.discipline.isNull", new Object[]{}));
+        grade.setDiscipline(disciplineService.findById(grade.getDiscipline().getId()));
         grade.setSchoolboy(schoolboyService.findById(grade.getSchoolboy().getId()));
         grade.setTeacher(teacherService.findById(grade.getTeacher().getId()));
         return gradeRepository.saveAndFlush(grade);

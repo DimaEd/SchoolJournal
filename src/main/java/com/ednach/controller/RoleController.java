@@ -67,6 +67,7 @@ public class RoleController {
      */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<RoleDto> save(@Valid @RequestBody RoleDto role) {
+        role.setId(null);
         final RoleDto roleDto = mapper.map(roleService.save(mapper.map(role, Role.class)), RoleDto.class);
         return new ResponseEntity<>(roleDto, HttpStatus.OK);
     }

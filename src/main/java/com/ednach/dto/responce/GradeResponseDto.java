@@ -1,5 +1,6 @@
 package com.ednach.dto.responce;
 
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,12 +13,14 @@ public class GradeResponseDto {
 
     private Long id;
 
-    private String subject;
+    private SchoolboyResponseDto schoolboy;
 
-    private String mark;
+    private DisciplineResponseDto discipline;
+
+    private Long mark;
 
     private TeacherResponseDto teacher;
 
-    private SchoolboyResponseDto schoolboy;
+
 
 }
