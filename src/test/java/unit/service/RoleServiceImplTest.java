@@ -56,6 +56,7 @@ class RoleServiceImplTest {
     void update() {
         final Role role = new Role();
         role.setId(1L);
+        when(roleRepository.findById(any(Long.class))).thenReturn(Optional.of(role));
         when(roleRepository.saveAndFlush(role)).thenReturn(role);
         assertEquals(roleService.update(role), role);
     }

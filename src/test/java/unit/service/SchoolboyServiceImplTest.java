@@ -2,9 +2,11 @@ package unit.service;
 
 import com.ednach.component.LocalizedMessageSource;
 import com.ednach.model.Classroom;
+import com.ednach.model.Schedule;
 import com.ednach.model.Schoolboy;
 import com.ednach.model.User;
 import com.ednach.repository.SchoolboyRepository;
+import com.ednach.repository.projection.SchoolboyProjection;
 import com.ednach.service.ClassroomService;
 import com.ednach.service.UserService;
 import com.ednach.service.impl.ScheduleServiceImpl;
@@ -15,6 +17,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,6 +43,39 @@ class SchoolboyServiceImplTest {
 
     @Test
     void findAll() {
+        List<SchoolboyProjection> scheduleList = Collections.singletonList(new SchoolboyProjection() {
+            @Override
+            public Long getSchoolboyId() {
+                return null;
+            }
+
+            @Override
+            public Long getUserId() {
+                return null;
+            }
+
+            @Override
+            public String getUserFirstName() {
+                return null;
+            }
+
+            @Override
+            public String getUserLastName() {
+                return null;
+            }
+
+            @Override
+            public Long getClassroomId() {
+                return null;
+            }
+
+            @Override
+            public String getClassName() {
+                return null;
+            }
+        });
+        when(schoolboyRepository.findAllCustom()).thenReturn(scheduleList);
+        assertEquals(schoolboyService.findAll(), scheduleList);
     }
 
     @Test
@@ -46,7 +83,7 @@ class SchoolboyServiceImplTest {
         final Schoolboy schoolboy = new Schoolboy();
         schoolboy.setId(1L);
         when(schoolboyRepository.findById(any(Long.class))).thenReturn(Optional.of(schoolboy));
-        assertEquals(schoolboyService.findById(1L),schoolboy);
+        assertEquals(schoolboyService.findById(1L), schoolboy);
 
     }
 
@@ -62,7 +99,7 @@ class SchoolboyServiceImplTest {
         when(schoolboyRepository.saveAndFlush(schoolboy)).thenReturn(schoolboy);
         when(userService.findById(1L)).thenReturn(user);
         when(classroomService.findById(1L)).thenReturn(classroom);
-        assertEquals(schoolboyService.save(schoolboy),schoolboy);
+        assertEquals(schoolboyService.save(schoolboy), schoolboy);
     }
 
     @Test
@@ -75,10 +112,11 @@ class SchoolboyServiceImplTest {
         classroom.setId(1L);
         schoolboy.setUser(user);
         schoolboy.setClassroom(classroom);
+        when(schoolboyRepository.findById(any(Long.class))).thenReturn(Optional.of(schoolboy));
         when(schoolboyRepository.saveAndFlush(schoolboy)).thenReturn(schoolboy);
         when(userService.findById(any(Long.class))).thenReturn(user);
         when(classroomService.findById(1L)).thenReturn(classroom);
-        assertEquals(schoolboyService.update(schoolboy),schoolboy);
+        assertEquals(schoolboyService.update(schoolboy), schoolboy);
 
     }
 

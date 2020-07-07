@@ -1,9 +1,10 @@
 package com.ednach.controller;
 
 import com.ednach.dto.request.SinRequestDto;
-import com.ednach.dto.responce.SinResponseDto;
+import com.ednach.dto.responce.*;
 import com.ednach.model.Schoolboy;
 import com.ednach.model.Sin;
+import com.ednach.repository.projection.SinProjection;
 import com.ednach.service.SinService;
 import com.ednach.component.LocalizedMessageSource;
 import com.ednach.model.Teacher;
@@ -24,28 +25,19 @@ import java.util.stream.Collectors;
 @RequestMapping("/sins")
 public class SinController {
 
-    final private Mapper mapper;
-    final private SinService sinService;
-    final private LocalizedMessageSource localizedMessageSource;
-    final private SchoolboyService schoolboyService;
+    private final  Mapper mapper;
+    private final SinService sinService;
+    private final LocalizedMessageSource localizedMessageSource;
+    private final SchoolboyService schoolboyService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<SinResponseDto>> getAll() {
-        final List<Sin> sins = sinService.findAll();
-        final List<SinResponseDto> sinResponseDtoList = sins.stream()
-                .map((sin) -> mapper.map(sin, SinResponseDto.class))
+    public ResponseEntity<List<SinProjectionResponseDto>> getAll() {
+        final List<SinProjection> sins = sinService.findAll();
+        final List<SinProjectionResponseDto> sinResponseDtoList = sins.stream()
+                .map(this::convertFromSinProjection)
                 .collect(Collectors.toList());
         return new ResponseEntity<>(sinResponseDtoList, HttpStatus.OK);
     }
-
-//    @RequestMapping(value = "/sinType/{type}",method = RequestMethod.GET)
-//    public ResponseEntity<List<SinResponseDto>> getAllSinByType(@PathVariable String type) {
-//        final List<Sin> sins = sinService.findByTypeSin(type);
-//        final List<SinResponseDto> sinResponseDtoList = sins.stream()
-//                .map((sin) -> mapper.map(sin, SinResponseDto.class))
-//                .collect(Collectors.toList());
-//        return new ResponseEntity<>(sinResponseDtoList, HttpStatus.OK);
-//    }
 
     @RequestMapping(value = "/schoolboy/{id}",method = RequestMethod.GET)
     public ResponseEntity<List<SinResponseDto>> getAllSinByType(@PathVariable Long id) {
@@ -95,4 +87,40 @@ public class SinController {
         sin.setSchoolboy(schoolboy);
         return sin;
     }
+
+    private SinProjectionResponseDto convertFromSinProjection(SinProjection sinProjection) {
+        SinProjectionResponseDto sinProjectionResponseDto = new SinProjectionResponseDto();
+        UserResponseDto userResponseDto = new UserResponseDto();
+        UserResponseDto userResponseDtoForTeacher = new UserResponseDto();
+
+        SchoolboyProjectionResponseDto schoolboyProjectionResponseDto = new SchoolboyProjectionResponseDto();
+        ClassroomProjectionResponseDto classroomProjectionResponseDto = new ClassroomProjectionResponseDto();
+        TeacherResponseDto teacherResponseDto = new TeacherResponseDto() ;
+
+        sinProjectionResponseDto.setId(sinProjection.getSinId());
+        sinProjectionResponseDto.setTypeSin(sinProjection.getTypeSin());
+        sinProjectionResponseDto.setPoints(sinProjection.getPoints());
+
+        schoolboyProjectionResponseDto.setId(sinProjection.getSchoolboyId());
+        userResponseDto.setId(sinProjection.getUserId());
+        userResponseDto.setFirstName(sinProjection.getUserFirstName());
+        userResponseDto.setLastName(sinProjection.getUserLastName());
+        schoolboyProjectionResponseDto.setUser(userResponseDto);
+
+        classroomProjectionResponseDto.setId(sinProjection.getClassroomId());
+        classroomProjectionResponseDto.setClassName(sinProjection.getClassName());
+        schoolboyProjectionResponseDto.setClassroom(classroomProjectionResponseDto);
+        sinProjectionResponseDto.setSchoolboy(schoolboyProjectionResponseDto);
+
+        teacherResponseDto.setId(sinProjection.getTeacherId());
+        userResponseDtoForTeacher.setId(sinProjection.getTeacher().getUser().getId());
+        userResponseDtoForTeacher.setFirstName(sinProjection.getTeacher().getUser().getFirstName());
+        userResponseDtoForTeacher.setLastName(sinProjection.getTeacher().getUser().getLastName());
+        teacherResponseDto.setUser(userResponseDtoForTeacher);
+        sinProjectionResponseDto.setTeacher(teacherResponseDto);
+
+
+        return sinProjectionResponseDto;
+    }
+
 }

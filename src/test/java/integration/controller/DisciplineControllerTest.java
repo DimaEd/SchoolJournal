@@ -62,7 +62,7 @@ class DisciplineControllerTest {
     }
 
     @Test
-    public void getOneNotExist() throws Exception {
+    void getOneNotExist() throws Exception {
         mockMvc.perform(get("/disciplines/10"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -71,15 +71,16 @@ class DisciplineControllerTest {
     }
 
     @Test
-    public void testSaveExistBadRequest() throws Exception {
+    void testSaveExistBadRequest() throws Exception {
         mockMvc.perform(post("/disciplines").contentType(APPLICATION_JSON_UTF8).content("{\"nameSubject\":\"maths\",\"teacherId\":2}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
                 .andExpect(jsonPath("$.message").value("Discipline name is not unique!"))
                 .andReturn();
     }
+
     @Test
-    public void testSaveHaveIdBadRequest() throws Exception {
+    void testSaveHaveIdBadRequest() throws Exception {
         mockMvc.perform(post("/disciplines/1").contentType(APPLICATION_JSON_UTF8).content("{\"nameSubject\":\"OBJ\",\"teacherId\":2}"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError())
@@ -87,7 +88,7 @@ class DisciplineControllerTest {
     }
 
     @Test
-    void save()  throws Exception {
+    void save() throws Exception {
         mockMvc.perform(post("/disciplines").contentType(APPLICATION_JSON_UTF8).content("{\"nameSubject\":\"OBJ\",\"teacherId\":2}"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -97,7 +98,7 @@ class DisciplineControllerTest {
 
 
     @Test
-    public void testPutOneBadRequest() throws Exception {
+    void testPutOneBadRequest() throws Exception {
         mockMvc.perform(put("/disciplines/1").contentType(APPLICATION_JSON_UTF8).content("{\"id\":2,\"nameSubject\":\"OBJ\",\"teacherId\":2}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -106,7 +107,7 @@ class DisciplineControllerTest {
     }
 
     @Test
-    public void testPutOneNotExist() throws Exception {
+    void testPutOneNotExist() throws Exception {
         mockMvc.perform(put("/disciplines/10").contentType(APPLICATION_JSON_UTF8).content("{\"id\":10,\"nameSubject\":\"OBJ\",\"teacherId\":2}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -116,7 +117,7 @@ class DisciplineControllerTest {
 
 
     @Test
-    public void testPutIdNullBadRequest() throws Exception {
+    void testPutIdNullBadRequest() throws Exception {
         mockMvc.perform(put("/disciplines/2").contentType(APPLICATION_JSON_UTF8).content("{\"nameSubject\":\"OBJ\",\"teacherId\":2}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -125,7 +126,7 @@ class DisciplineControllerTest {
     }
 
     @Test
-    public void testPutOneExist() throws Exception {
+    void testPutOneExist() throws Exception {
         mockMvc.perform(put("/disciplines/2").contentType(APPLICATION_JSON_UTF8).content("{\"id\":2,\"nameSubject\":\"english\",\"teacherId\":2}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -134,7 +135,7 @@ class DisciplineControllerTest {
     }
 
     @Test
-    void update()  throws Exception {
+    void update() throws Exception {
         mockMvc.perform(put("/disciplines/1").contentType(APPLICATION_JSON_UTF8).content("{\"id\":1,\"nameSubject\":\"OBJ\",\"teacherId\":2}"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -143,7 +144,7 @@ class DisciplineControllerTest {
     }
 
     @Test
-    public void testDeleteExist() throws Exception {
+    void testDeleteExist() throws Exception {
         mockMvc.perform(get("/disciplines/2"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -151,7 +152,7 @@ class DisciplineControllerTest {
     }
 
     @Test
-    public void testDeleteNotExist() throws Exception {
+    void testDeleteNotExist() throws Exception {
         mockMvc.perform(delete("/disciplines/10"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())

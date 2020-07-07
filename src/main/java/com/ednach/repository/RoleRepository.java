@@ -3,8 +3,6 @@ package com.ednach.repository;
 import com.ednach.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
-
 /**
  * RoleRepository provides the necessary search operations
  */

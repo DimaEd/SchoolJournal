@@ -44,8 +44,8 @@ class DayOfWeekServiceImplTest {
     @Test
     void findByDayOfWeek() {
         final DayOfWeek dayOfWeek = new DayOfWeek();
-        dayOfWeek.setDayOfWeek("monday");
-        when(dayOfWeekRepository.findByDayOfWeek("monday")).thenReturn(dayOfWeek);
+        dayOfWeek.setDay("monday");
+        when(dayOfWeekRepository.findByDay("monday")).thenReturn(dayOfWeek);
         assertEquals(dayOfWeekService.findByDayOfWeek("monday"), dayOfWeek);
     }
 }

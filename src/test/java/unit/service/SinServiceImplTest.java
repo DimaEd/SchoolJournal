@@ -5,6 +5,7 @@ import com.ednach.model.Schoolboy;
 import com.ednach.model.Sin;
 import com.ednach.model.Teacher;
 import com.ednach.repository.SinRepository;
+import com.ednach.repository.projection.SinProjection;
 import com.ednach.service.SchoolboyService;
 import com.ednach.service.TeacherService;
 import com.ednach.service.impl.SinServiceImpl;
@@ -41,8 +42,9 @@ class SinServiceImplTest {
     void findByTypeSin() {
         final Sin sin = new Sin();
         sin.setTypeSin("fight");
-        when(sinRepository.findByTypeSin(any(String.class))).thenReturn(sin);
-        assertEquals(sinService.findByTypeSin("fight"),sin);
+        List<Sin> sinList = Collections.singletonList(sin);
+        when(sinRepository.findByTypeSin(any(String.class))).thenReturn(sinList);
+        assertEquals(sinService.findAllByTypeSin("fight"), sinList);
     }
 
     @Test
@@ -52,14 +54,69 @@ class SinServiceImplTest {
         final Schoolboy schoolboy = new Schoolboy();
         sin.setSchoolboy(schoolboy);
         when(sinRepository.findBySchoolboy(any(Schoolboy.class))).thenReturn(sinList);
-        assertEquals(sinService.findBySchoolboy(schoolboy),sinList);
+        assertEquals(sinService.findBySchoolboy(schoolboy), sinList);
     }
 
     @Test
     void findAll() {
-        List<Sin> sinList = Collections.singletonList(new Sin());
-        when(sinRepository.findAll()).thenReturn(sinList);
-        assertEquals(sinService.findAll(),sinList);
+        List<SinProjection> sinList = Collections.singletonList(new SinProjection() {
+            @Override
+            public Long getSinId() {
+                return null;
+            }
+
+            @Override
+            public String getTypeSin() {
+                return null;
+            }
+
+            @Override
+            public Long getPoints() {
+                return null;
+            }
+
+            @Override
+            public Long getSchoolboyId() {
+                return null;
+            }
+
+            @Override
+            public Long getUserId() {
+                return null;
+            }
+
+            @Override
+            public String getUserFirstName() {
+                return null;
+            }
+
+            @Override
+            public String getUserLastName() {
+                return null;
+            }
+
+            @Override
+            public Long getClassroomId() {
+                return null;
+            }
+
+            @Override
+            public Teacher getTeacher() {
+                return null;
+            }
+
+            @Override
+            public String getClassName() {
+                return null;
+            }
+
+            @Override
+            public Long getTeacherId() {
+                return null;
+            }
+        });
+        when(sinRepository.findAllCustom()).thenReturn(sinList);
+        assertEquals(sinService.findAll(), sinList);
     }
 
     @Test
@@ -67,7 +124,7 @@ class SinServiceImplTest {
         final Sin sin = new Sin();
         sin.setId(1L);
         when(sinRepository.findById(any(Long.class))).thenReturn(Optional.of(sin));
-        assertEquals(sinService.findById(1L),sin);
+        assertEquals(sinService.findById(1L), sin);
     }
 
     @Test
@@ -82,7 +139,7 @@ class SinServiceImplTest {
         when(sinRepository.saveAndFlush(sin)).thenReturn(sin);
         when(schoolboyService.findById(any(Long.class))).thenReturn(schoolboy);
         when(teacherService.findById(1L)).thenReturn(teacher);
-        assertEquals(sinService.save(sin),sin);
+        assertEquals(sinService.save(sin), sin);
 
 
     }
@@ -97,10 +154,11 @@ class SinServiceImplTest {
         teacher.setId(1L);
         sin.setSchoolboy(schoolboy);
         sin.setTeacher(teacher);
+        when(sinRepository.findById(any(Long.class))).thenReturn(Optional.of(sin));
         when(sinRepository.saveAndFlush(sin)).thenReturn(sin);
         when(schoolboyService.findById(any(Long.class))).thenReturn(schoolboy);
         when(teacherService.findById(1L)).thenReturn(teacher);
-        assertEquals(sinService.update(sin),sin);
+        assertEquals(sinService.update(sin), sin);
     }
 
     @Test

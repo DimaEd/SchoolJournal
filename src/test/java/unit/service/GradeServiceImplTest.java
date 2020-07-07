@@ -56,7 +56,7 @@ class GradeServiceImplTest {
     void findById() {
         final Grade grade = new Grade();
         when(gradeRepository.findById(any(Long.class))).thenReturn(Optional.of(grade));
-        assertEquals(gradeService.findById(1L),grade);
+        assertEquals(gradeService.findById(1L), grade);
     }
 
     @Test
@@ -65,7 +65,7 @@ class GradeServiceImplTest {
         final Schoolboy schoolboy = new Schoolboy();
         schoolboy.setId(1L);
         when(gradeRepository.findBySchoolboy(schoolboy)).thenReturn(gradeList);
-        assertEquals(gradeService.findBySchoolboy(schoolboy),gradeList);
+        assertEquals(gradeService.findBySchoolboy(schoolboy), gradeList);
     }
 
     @Test
@@ -81,7 +81,7 @@ class GradeServiceImplTest {
         grade.setSchoolboy(schoolboy);
         grade.setTeacher(teacher);
         when(gradeRepository.saveAndFlush(grade)).thenReturn(grade);
-        assertEquals(gradeService.save(grade),grade);
+        assertEquals(gradeService.save(grade), grade);
     }
 
     @Test
@@ -97,9 +97,12 @@ class GradeServiceImplTest {
         grade.setDiscipline(discipline);
         grade.setSchoolboy(schoolboy);
         grade.setTeacher(teacher);
+        when(schoolboyService.findById(any(Long.class))).thenReturn(schoolboy);
+        when(teacherService.findById(any(Long.class))).thenReturn(teacher);
+        when(disciplineService.findById(any(Long.class))).thenReturn(discipline);
         when(gradeRepository.findById(1L)).thenReturn(Optional.of(grade));
         when(gradeRepository.saveAndFlush(grade)).thenReturn(grade);
-        assertEquals(gradeService.update(grade),grade);
+        assertEquals(gradeService.update(grade), grade);
     }
 
     @Test

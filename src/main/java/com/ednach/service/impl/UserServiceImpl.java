@@ -1,11 +1,11 @@
 package com.ednach.service.impl;
 
 import com.ednach.repository.UserRepository;
-import com.ednach.model.Role;
 import com.ednach.model.User;
 import com.ednach.service.RoleService;
 import com.ednach.service.UserService;
 import com.ednach.component.LocalizedMessageSource;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +15,7 @@ import java.util.Objects;
 /**
  * Implementation of service interface for User entity
  */
+@RequiredArgsConstructor
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -22,12 +23,6 @@ public class UserServiceImpl implements UserService {
     private final LocalizedMessageSource localizedMessageSource;
     private final RoleService roleService;
     private final UserRepository userRepository;
-
-    public UserServiceImpl(LocalizedMessageSource localizedMessageSource, RoleService roleService, UserRepository userRepository) {
-        this.localizedMessageSource = localizedMessageSource;
-        this.roleService = roleService;
-        this.userRepository = userRepository;
-    }
 
     @Override
     public List<User> findAll() {
@@ -42,6 +37,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByFirstName(String firstName) {
         return userRepository.findByFirstName(firstName);
+    }
+
+    @Override
+    public List<User> findUserByFirstName(String firstName) {
+        return userRepository.findUserByFirstName(firstName);
     }
 
     @Override

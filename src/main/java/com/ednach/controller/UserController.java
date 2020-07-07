@@ -4,7 +4,6 @@ import com.ednach.component.LocalizedMessageSource;
 import com.ednach.dto.request.UserRequestDto;
 import com.ednach.model.Role;
 import com.ednach.model.User;
-import com.ednach.service.RoleService;
 import com.ednach.service.UserService;
 import com.ednach.dto.responce.UserResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,6 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private final Mapper mapper;
-    private final RoleService roleService;
     private final UserService userService;
     private final LocalizedMessageSource localizedMessageSource;
 
@@ -42,9 +40,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{firstName}", method = RequestMethod.GET)
-    public ResponseEntity<UserResponseDto> getName(@PathVariable String firstName) {
-        final UserResponseDto userResponseDto = mapper.map(userService.findByFirstName(firstName), UserResponseDto.class);
-        return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
+    public ResponseEntity<List<UserResponseDto>> getAllByFirstName(@PathVariable String firstName) {
+        final List<User> users = userService.findUserByFirstName(firstName);
+        final List<UserResponseDto> userResponseDtoList = users.stream()
+                .map((user) -> mapper.map(user, UserResponseDto.class))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(userResponseDtoList, HttpStatus.OK);
     }
 
     @GetMapping("{id:[\\d]+}")
@@ -52,12 +53,6 @@ public class UserController {
         final UserResponseDto userResponseDto = mapper.map(userService.findById(id), UserResponseDto.class);
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
-
-//    @RequestMapping(value = "{firstName},{lastName}", method = RequestMethod.GET)
-//    public ResponseEntity<UserResponseDto> getByFirstName(@PathVariable String firstName,@PathVariable String lastName) {
-//        final UserResponseDto userResponse = mapper.map(userService.findByFirstNameAndLastName(firstName,lastName), UserResponseDto.class);
-//        return new ResponseEntity<>(userResponse, HttpStatus.OK);
-//    }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<UserResponseDto> save(@Valid @RequestBody UserRequestDto userRequestDto) {

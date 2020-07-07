@@ -22,13 +22,13 @@ public class DayOfWeek {
     @OneToMany(mappedBy = "dayOfWeek")
     private Set<Schedule> schedules;
 
-    private String dayOfWeek;
+    private String day;
 
     public DayOfWeek() {
     }
 
-    public DayOfWeek(Long id, String dayOfWeek) {
+    public DayOfWeek(Long id, String day) {
         this.id = id;
-        this.dayOfWeek = dayOfWeek;
+        this.day = day;
     }
 }

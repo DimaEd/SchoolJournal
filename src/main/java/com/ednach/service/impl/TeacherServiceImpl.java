@@ -5,17 +5,17 @@ import com.ednach.component.LocalizedMessageSource;
 import com.ednach.model.Teacher;
 import com.ednach.service.TeacherService;
 import com.ednach.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Implementation of service interface for Teacher entity
  */
-
+@RequiredArgsConstructor
 @Service
 @Transactional
 public class TeacherServiceImpl implements TeacherService {
@@ -23,12 +23,6 @@ public class TeacherServiceImpl implements TeacherService {
     final LocalizedMessageSource localizedMessageSource;
     final UserService userService;
     final TeacherRepository teacherRepository;
-
-    public TeacherServiceImpl(LocalizedMessageSource localizedMessageSource, UserService userService, TeacherRepository teacherRepository) {
-        this.localizedMessageSource = localizedMessageSource;
-        this.userService = userService;
-        this.teacherRepository = teacherRepository;
-    }
 
     @Override
     public List<Teacher> findAll() {

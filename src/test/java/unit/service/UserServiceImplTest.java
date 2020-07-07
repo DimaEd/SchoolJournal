@@ -40,7 +40,16 @@ class UserServiceImplTest {
     void findAll() {
         List<User> userList = Collections.singletonList(new User());
         when(userRepository.findAll()).thenReturn(userList);
-        assertEquals(userService.findAll(),userList);
+        assertEquals(userService.findAll(), userList);
+    }
+
+    @Test
+    void findByUserFirstName() {
+        final User user = new User();
+        user.setFirstName("Moroz");
+        List<User> userList = Collections.singletonList(user);
+        when(userRepository.findUserByFirstName(any(String.class))).thenReturn(userList);
+        assertEquals(userService.findUserByFirstName("Moroz"), userList);
     }
 
     @Test
@@ -48,7 +57,7 @@ class UserServiceImplTest {
         final User user = new User();
         user.setId(1L);
         when(userRepository.findById(any(Long.class))).thenReturn(Optional.of(user));
-        assertEquals(userService.findById(1L),user);
+        assertEquals(userService.findById(1L), user);
     }
 
     @Test
@@ -57,7 +66,7 @@ class UserServiceImplTest {
         user.setId(1L);
         user.setFirstName("Ednach");
         when(userRepository.findByFirstName(any(String.class))).thenReturn(user);
-        assertEquals(userService.findByFirstName("Ednach"),user);
+        assertEquals(userService.findByFirstName("Ednach"), user);
     }
 
     @Test
@@ -99,6 +108,7 @@ class UserServiceImplTest {
         doNothing().when(userRepository).deleteById(any(Long.class));
         assertDoesNotThrow(() -> userService.deleteById(1L));
     }
+
     private Set<Role> getRoles() {
         return Stream.of(1L).map(roleId -> {
             Role role = new Role();

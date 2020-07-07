@@ -44,7 +44,4 @@ public class Teacher {
         this.id = id;
         this.user = user;
     }
-    public Teacher(Long id) {
-        this.id = id;
-    }
 }

@@ -3,15 +3,13 @@ package com.ednach.dto.responce;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * Response DTO (Data transfer object) class for Teacher entity.
- */
 @Getter
 @Setter
-public class TeacherResponseDto {
+public class SchoolboyProjectionResponseDto {
 
     private Long id;
 
     private UserResponseDto user;
 
+    private ClassroomProjectionResponseDto classroom;
 }

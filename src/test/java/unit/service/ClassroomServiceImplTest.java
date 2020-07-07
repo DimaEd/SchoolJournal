@@ -63,7 +63,8 @@ class ClassroomServiceImplTest {
     @Test
     void save() {
         final Classroom classroom = new Classroom();
-        final Teacher teacher = new Teacher(1L);
+        final Teacher teacher = new Teacher();
+        teacher.setId(1L);
         classroom.setTeacher(teacher);
         when(classroomRepository.saveAndFlush(classroom)).thenReturn(classroom);
         when(teacherService.findById(1L)).thenReturn(teacher);
@@ -74,7 +75,8 @@ class ClassroomServiceImplTest {
     void update() {
         final Classroom classroom = new Classroom();
         classroom.setId(1L);
-        final Teacher teacher = new Teacher(1L);
+        final Teacher teacher = new Teacher();
+        teacher.setId(1L);
         classroom.setTeacher(teacher);
         when(classroomRepository.saveAndFlush(classroom)).thenReturn(classroom);
         when(teacherService.findById(1L)).thenReturn(teacher);

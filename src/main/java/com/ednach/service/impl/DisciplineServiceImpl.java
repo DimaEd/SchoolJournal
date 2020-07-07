@@ -1,7 +1,6 @@
 package com.ednach.service.impl;
 
 import com.ednach.model.Discipline;
-import com.ednach.service.ScheduleService;
 import com.ednach.service.TeacherService;
 import com.ednach.component.LocalizedMessageSource;
 import com.ednach.repository.DisciplineRepository;
@@ -12,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Implementation of service interface for Discipline entity

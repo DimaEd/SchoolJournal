@@ -62,7 +62,7 @@ class TeacherControllerTest {
     }
 
     @Test
-    public void getOneNotExist() throws Exception {
+     void getOneNotExist() throws Exception {
         mockMvc.perform(get("/teachers/5"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -71,7 +71,7 @@ class TeacherControllerTest {
     }
 
     @Test
-    public void testSaveExistBadRequest() throws Exception {
+     void testSaveExistBadRequest() throws Exception {
         mockMvc.perform(post("/teachers").contentType(APPLICATION_JSON_UTF8).content("{\"userId\":2}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -79,7 +79,7 @@ class TeacherControllerTest {
                 .andReturn();
     }
     @Test
-    public void testSaveHaveIdBadRequest() throws Exception {
+     void testSaveHaveIdBadRequest() throws Exception {
         mockMvc.perform(post("/teachers/1").contentType(APPLICATION_JSON_UTF8).content("{\"id\":4,\"userId\":3}"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError())
@@ -95,7 +95,7 @@ class TeacherControllerTest {
                 .andReturn();
     }
     @Test
-    public void testPutOneBadRequest() throws Exception {
+    void testPutOneBadRequest() throws Exception {
         mockMvc.perform(put("/teachers/1").contentType(APPLICATION_JSON_UTF8).content("{\"id\":2,\"userId\":3}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -104,7 +104,7 @@ class TeacherControllerTest {
     }
 
     @Test
-    public void testPutOneNotExist() throws Exception {
+     void testPutOneNotExist() throws Exception {
         mockMvc.perform(put("/teachers/5").contentType(APPLICATION_JSON_UTF8).content("{\"id\":5,\"userId\":9}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -114,7 +114,7 @@ class TeacherControllerTest {
 
 
     @Test
-    public void testPutIdNullBadRequest() throws Exception {
+    void testPutIdNullBadRequest() throws Exception {
         mockMvc.perform(put("/teachers/2").contentType(APPLICATION_JSON_UTF8).content("{\"userId\": 3}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -123,7 +123,7 @@ class TeacherControllerTest {
     }
 
     @Test
-    public void testPutOneExist() throws Exception {
+     void testPutOneExist() throws Exception {
         mockMvc.perform(put("/teachers/2").contentType(APPLICATION_JSON_UTF8).content("{\"id\":2,\"userId\":2}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -142,7 +142,7 @@ class TeacherControllerTest {
     }
 
     @Test
-    public void testDeleteExist() throws Exception {
+     void testDeleteExist() throws Exception {
         mockMvc.perform(get("/teachers/2"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -150,7 +150,7 @@ class TeacherControllerTest {
     }
 
     @Test
-    public void testDeleteNotExist() throws Exception {
+    void testDeleteNotExist() throws Exception {
         mockMvc.perform(delete("/teachers/5"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())

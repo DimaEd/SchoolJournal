@@ -93,6 +93,7 @@ class ScheduleServiceImplTest {
         schedule.setDiscipline(discipline);
         schedule.setDayOfWeek(dayOfWeek);
         schedule.setClassroom(classroom);
+        when(scheduleRepository.findById(any(Long.class))).thenReturn(Optional.of(schedule));
         when(scheduleRepository.saveAndFlush(schedule)).thenReturn(schedule);
         when(disciplineService.findById(any(Long.class))).thenReturn(discipline);
         when(dayOfWeekService.findById(any(Long.class))).thenReturn(dayOfWeek);

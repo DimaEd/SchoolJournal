@@ -39,8 +39,4 @@ public class Discipline {
     @OneToMany(mappedBy = "discipline")
     private Set<Grade> grades;
 
-    public Discipline() {
-    }
-
-
 }

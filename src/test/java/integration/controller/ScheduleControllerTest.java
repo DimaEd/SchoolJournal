@@ -62,7 +62,7 @@ class ScheduleControllerTest {
     }
 
     @Test
-    public void getOneNotExist() throws Exception {
+    void getOneNotExist() throws Exception {
         mockMvc.perform(get("/schedule/7"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -71,7 +71,7 @@ class ScheduleControllerTest {
     }
 
     @Test
-    public void testSaveHaveIdBadRequest() throws Exception {
+    void testSaveHaveIdBadRequest() throws Exception {
         mockMvc.perform(post("/schedule/2").contentType(APPLICATION_JSON_UTF8).content("{\"classroomId\":1,\"disciplineId\":2,\"dayOfWeekId\":3}"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError())
@@ -79,7 +79,7 @@ class ScheduleControllerTest {
     }
 
     @Test
-    void save()  throws Exception {
+    void save() throws Exception {
         mockMvc.perform(post("/schedule").contentType(APPLICATION_JSON_UTF8).content("{\"classroomId\":1,\"disciplineId\":2,\"dayOfWeekId\":3}"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -89,7 +89,7 @@ class ScheduleControllerTest {
 
 
     @Test
-    public void testPutOneBadRequest() throws Exception {
+    void testPutOneBadRequest() throws Exception {
         mockMvc.perform(put("/schedule/1").contentType(APPLICATION_JSON_UTF8).content("{\"id\":2,\"classroomId\":1,\"disciplineId\":2,\"dayOfWeekId\":3}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -98,7 +98,7 @@ class ScheduleControllerTest {
     }
 
     @Test
-    public void testPutOneNotExist() throws Exception {
+    void testPutOneNotExist() throws Exception {
         mockMvc.perform(put("/schedule/10").contentType(APPLICATION_JSON_UTF8).content("{\"id\":10,\"classroomId\":1,\"disciplineId\":2,\"dayOfWeekId\":3}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -108,7 +108,7 @@ class ScheduleControllerTest {
 
 
     @Test
-    public void testPutIdNullBadRequest() throws Exception {
+    void testPutIdNullBadRequest() throws Exception {
         mockMvc.perform(put("/schedule/1").contentType(APPLICATION_JSON_UTF8).content("{\"classroomId\":1,\"disciplineId\":2,\"dayOfWeekId\":3}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -117,7 +117,7 @@ class ScheduleControllerTest {
     }
 
     @Test
-    void update()  throws Exception {
+    void update() throws Exception {
         mockMvc.perform(put("/schedule/1").contentType(APPLICATION_JSON_UTF8).content("{\"id\":1,\"classroomId\":1,\"disciplineId\":2,\"dayOfWeekId\":3}"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -126,7 +126,7 @@ class ScheduleControllerTest {
     }
 
     @Test
-    public void testDeleteExist() throws Exception {
+    void testDeleteExist() throws Exception {
         mockMvc.perform(get("/schedule/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -134,7 +134,7 @@ class ScheduleControllerTest {
     }
 
     @Test
-    public void testDeleteNotExist() throws Exception {
+    void testDeleteNotExist() throws Exception {
         mockMvc.perform(delete("/schedule/5"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())

@@ -1,6 +1,7 @@
 package com.ednach.service.impl;
 
 import com.ednach.model.Schoolboy;
+import com.ednach.repository.projection.SinProjection;
 import com.ednach.service.SinService;
 import com.ednach.service.TeacherService;
 import com.ednach.component.LocalizedMessageSource;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Implementation of service interface for Sin entity
@@ -21,15 +21,13 @@ import java.util.Objects;
 @Service
 @Transactional
 public class SinServiceImpl implements SinService {
+
     final SinRepository sinRepository;
     final LocalizedMessageSource localizedMessageSource;
     final SchoolboyService schoolboyService;
     final TeacherService teacherService;
 
-    @Override
-    public Sin findByTypeSin(String typeSin) {
-        return sinRepository.findByTypeSin(typeSin);
-    }
+
 
     @Override
     public List<Sin> findBySchoolboy(Schoolboy schoolboy) {
@@ -37,8 +35,13 @@ public class SinServiceImpl implements SinService {
     }
 
     @Override
-    public List<Sin> findAll() {
-        return sinRepository.findAll();
+    public List<SinProjection> findAll() {
+        return sinRepository.findAllCustom();
+    }
+
+    @Override
+    public List<Sin> findAllByTypeSin(String typeSin) {
+        return sinRepository.findByTypeSin(typeSin);
     }
 
     @Override

@@ -42,10 +42,6 @@ public class Classroom {
     public Classroom() {
     }
 
-    public Classroom(String className) {
-        this.className=className;
-    }
-
     public Classroom(Long id, Set<Schoolboy> schoolboys, Teacher teacher, String className) {
         this.id = id;
         this.schoolboys = schoolboys;

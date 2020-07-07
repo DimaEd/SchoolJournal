@@ -1,6 +1,5 @@
 package com.ednach.service;
 
-import com.ednach.model.Role;
 import com.ednach.model.User;
 
 import java.util.List;
@@ -16,6 +15,8 @@ public interface UserService {
 
     User findByFirstName(String firstName);
 
+    List<User> findUserByFirstName(String firstName);
+
     User save(User user);
 
     User update(User user);
@@ -23,4 +24,6 @@ public interface UserService {
     void delete(User user);
 
     void deleteById(Long id);
+
+
 }

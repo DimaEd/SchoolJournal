@@ -2,6 +2,7 @@ package com.ednach.service;
 
 import com.ednach.model.Schoolboy;
 import com.ednach.model.Sin;
+import com.ednach.repository.projection.SinProjection;
 
 import java.util.List;
 
@@ -10,11 +11,11 @@ import java.util.List;
  */
 public interface SinService {
 
-    List<Sin> findAll();
+    List<SinProjection> findAll();
+
+    List<Sin> findAllByTypeSin(String typeSin);
 
     Sin findById(Long id);
-
-    Sin findByTypeSin(String typeSin);
 
     List<Sin> findBySchoolboy(Schoolboy schoolboy);
 

@@ -34,10 +34,6 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     private Set<User> user;
 
-    public Role(Long id) {
-        this.id = id;
-    }
-
     public Role(Long id, String name) {
         this.id = id;
         this.name = name;

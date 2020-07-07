@@ -53,10 +53,6 @@ public class User {
     @Size(min = 3, max = 100, message = "{user.password.size}")
     private String password;
 
-    public User(Long id) {
-        this.id = id;
-    }
-
     public User(Long id, String firstName, String lastName, Set<Role> roles, String password) {
         this.id = id;
         this.firstName = firstName;

@@ -34,6 +34,6 @@ public class DayOfWeekServiceImpl implements DayOfWeekService {
 
     @Override
     public DayOfWeek findByDayOfWeek(String day) {
-        return dayOfWeekRepository.findByDayOfWeek(day);
+        return dayOfWeekRepository.findByDay(day);
     }
 }

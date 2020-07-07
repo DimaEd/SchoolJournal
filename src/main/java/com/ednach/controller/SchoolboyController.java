@@ -1,11 +1,15 @@
 package com.ednach.controller;
 
 import com.ednach.dto.request.SchoolboyRequestDto;
+import com.ednach.dto.responce.ClassroomProjectionResponseDto;
+import com.ednach.dto.responce.SchoolboyProjectionResponseDto;
 import com.ednach.dto.responce.SchoolboyResponseDto;
+import com.ednach.dto.responce.UserResponseDto;
 import com.ednach.model.Schoolboy;
 import com.ednach.model.User;
 import com.ednach.component.LocalizedMessageSource;
 import com.ednach.model.Classroom;
+import com.ednach.repository.projection.SchoolboyProjection;
 import com.ednach.service.SchoolboyService;
 import lombok.RequiredArgsConstructor;
 import org.dozer.Mapper;
@@ -23,15 +27,15 @@ import java.util.stream.Collectors;
 @RequestMapping("/schoolboys")
 public class SchoolboyController {
 
-    final private Mapper mapper;
+    private final Mapper mapper;
     private final LocalizedMessageSource localizedMessageSource;
     private final SchoolboyService schoolboyService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<SchoolboyResponseDto>> getAll() {
-        final List<Schoolboy> schoolboys = schoolboyService.findAll();
-        final List<SchoolboyResponseDto> schoolboyResponseDtoList = schoolboys.stream()
-                .map((schoolboy) -> mapper.map(schoolboy, SchoolboyResponseDto.class))
+    public ResponseEntity<List<SchoolboyProjectionResponseDto>> getAll() {
+        final List<SchoolboyProjection> schoolboys = schoolboyService.findAll();
+        final List<SchoolboyProjectionResponseDto> schoolboyResponseDtoList = schoolboys.stream()
+                .map(this::convertFromSchoolboyProjection)
                 .collect(Collectors.toList());
         return new ResponseEntity<>(schoolboyResponseDtoList, HttpStatus.OK);
     }
@@ -74,6 +78,24 @@ public class SchoolboyController {
         user.setId(schoolboyRequestDto.getUserId());
         schoolboy.setUser(user);
         return schoolboy;
+    }
+    private SchoolboyProjectionResponseDto convertFromSchoolboyProjection(SchoolboyProjection schoolboyProjection) {
+        SchoolboyProjectionResponseDto schoolboyProjectionResponseDto = new SchoolboyProjectionResponseDto();
+        UserResponseDto userResponseDto = new UserResponseDto();
+        ClassroomProjectionResponseDto classroomProjectionResponseDto = new ClassroomProjectionResponseDto();
+
+        schoolboyProjectionResponseDto.setId(schoolboyProjection.getUserId());
+
+        userResponseDto.setId(schoolboyProjection.getUserId());
+        userResponseDto.setFirstName(schoolboyProjection.getUserFirstName());
+        userResponseDto.setLastName(schoolboyProjection.getUserLastName());
+        schoolboyProjectionResponseDto.setUser(userResponseDto);
+
+        classroomProjectionResponseDto.setId(schoolboyProjection.getClassroomId());
+        classroomProjectionResponseDto.setClassName(schoolboyProjection.getClassName());
+        schoolboyProjectionResponseDto.setClassroom(classroomProjectionResponseDto);
+
+        return schoolboyProjectionResponseDto;
     }
 }
 

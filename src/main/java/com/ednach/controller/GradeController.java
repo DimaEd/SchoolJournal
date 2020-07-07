@@ -7,7 +7,6 @@ import com.ednach.model.Schoolboy;
 import com.ednach.component.LocalizedMessageSource;
 import com.ednach.dto.responce.GradeResponseDto;
 import com.ednach.model.Teacher;
-import com.ednach.service.DisciplineService;
 import com.ednach.service.GradeService;
 import com.ednach.service.SchoolboyService;
 import lombok.RequiredArgsConstructor;

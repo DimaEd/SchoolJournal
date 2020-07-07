@@ -20,5 +20,5 @@ public class DayOfWeekDto {
     @NotNull(message = "{DayOfWeekDto.dayOfWeek.notNull}")
     @NotEmpty(message = "{DayOfWeekDto.dayOfWeek.notEmpty}")
     @Size(min = 3, max = 50, message = "{DayOfWeekDto.dayOfWeek.size}")
-    private String dayOfWeek;
+    private String day;
 }

@@ -1,10 +1,7 @@
 package com.ednach.dto.responce;
 
-import com.ednach.dto.RoleDto;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Set;
 
 /**
  * Response DTO (Data transfer object) class for User entity.

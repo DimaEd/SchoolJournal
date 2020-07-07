@@ -38,7 +38,7 @@ class TeacherServiceImplTest {
     void findAll() {
         List<Teacher> teacherList = Collections.singletonList(new Teacher());
         when(teacherRepository.findAll()).thenReturn(teacherList);
-        assertEquals(teacherService.findAll(),teacherList);
+        assertEquals(teacherService.findAll(), teacherList);
 
     }
 
@@ -47,7 +47,7 @@ class TeacherServiceImplTest {
         final Teacher teacher = new Teacher();
         teacher.setId(1L);
         when(teacherRepository.findById(any(Long.class))).thenReturn(Optional.of(teacher));
-        assertEquals(teacherService.findById(1L),teacher);
+        assertEquals(teacherService.findById(1L), teacher);
     }
 
     @Test
@@ -58,7 +58,7 @@ class TeacherServiceImplTest {
         teacher.setUser(user);
         when(teacherRepository.saveAndFlush(teacher)).thenReturn(teacher);
         when(userService.findById(any(Long.class))).thenReturn(user);
-        assertEquals(teacherService.save(teacher),teacher);
+        assertEquals(teacherService.save(teacher), teacher);
     }
 
     @Test
@@ -68,9 +68,10 @@ class TeacherServiceImplTest {
         final User user = new User();
         user.setId(1L);
         teacher.setUser(user);
+        when(teacherRepository.findById(any(Long.class))).thenReturn(Optional.of(teacher));
         when(teacherRepository.saveAndFlush(teacher)).thenReturn(teacher);
         when(userService.findById(any(Long.class))).thenReturn(user);
-        assertEquals(teacherService.update(teacher),teacher);
+        assertEquals(teacherService.update(teacher), teacher);
     }
 
     @Test

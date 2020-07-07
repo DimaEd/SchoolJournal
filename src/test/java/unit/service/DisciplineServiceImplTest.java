@@ -68,6 +68,7 @@ class DisciplineServiceImplTest {
         final Teacher teacher = new Teacher();
         teacher.setId(1L);
         discipline.setTeacher(teacher);
+        when(disciplineRepository.findById(any(Long.class))).thenReturn(Optional.of(discipline));
         when(disciplineRepository.saveAndFlush(discipline)).thenReturn(discipline);
         when(teacherService.findById(1l)).thenReturn(teacher);
         assertEquals(disciplineService.update(discipline), discipline);

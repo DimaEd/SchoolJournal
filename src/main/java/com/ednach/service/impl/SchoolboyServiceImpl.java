@@ -9,6 +9,7 @@ import com.ednach.service.ClassroomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.ednach.repository.projection.SchoolboyProjection;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,9 +27,10 @@ public class SchoolboyServiceImpl implements SchoolboyService {
     final LocalizedMessageSource localizedMessageSource;
 
     @Override
-    public List<Schoolboy> findAll() {
-        return schoolboyRepository.findAll();
+    public List<SchoolboyProjection> findAll() {
+        return schoolboyRepository.findAllCustom();
     }
+
 
     @Override
     public Schoolboy findById(Long id) {

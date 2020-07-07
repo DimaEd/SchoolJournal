@@ -61,7 +61,7 @@ INSERT INTO classroom VALUES (1,'10A',1),(2,'11B',2);
 DROP TABLE IF EXISTS dayofweek;
 CREATE TABLE dayOfWeek (
   id bigint(8) NOT NULL AUTO_INCREMENT,
-  dayOfWeek varchar(45) NOT NULL,
+  day varchar(45) NOT NULL,
   PRIMARY KEY (id),
 );
 INSERT INTO dayofweek VALUES (1,'monday'),(2,'tuesday'),(3,'wednesday'),(4,'thursday'),(5,'friday');

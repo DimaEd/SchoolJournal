@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 /**
  * Controller for role entity
  */
-//@RequiredArgsConstructor
 @RestController
 @RequestMapping("/roles")
 public class RoleController {

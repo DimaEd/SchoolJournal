@@ -1,6 +1,7 @@
 package com.ednach.service;
 
 import com.ednach.model.Schoolboy;
+import com.ednach.repository.projection.SchoolboyProjection;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public interface SchoolboyService {
 
-    List<Schoolboy> findAll();
+    List<SchoolboyProjection> findAll();
 
     Schoolboy findById(Long id);
 

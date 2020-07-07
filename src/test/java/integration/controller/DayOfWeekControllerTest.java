@@ -41,8 +41,8 @@ class DayOfWeekControllerTest {
         mockMvc.perform(get("/dayOfWeek"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].dayOfWeek").value("monday"))
-                .andExpect(jsonPath("$[1].dayOfWeek").value("tuesday"))
+                .andExpect(jsonPath("$[0].day").value("monday"))
+                .andExpect(jsonPath("$[1].day").value("tuesday"))
                 .andReturn();
     }
 
@@ -51,12 +51,12 @@ class DayOfWeekControllerTest {
         mockMvc.perform(get("/dayOfWeek/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.dayOfWeek").value("monday"))
+                .andExpect(jsonPath("$.day").value("monday"))
                 .andReturn();
     }
 
     @Test
-    public void getOneNotExist() throws Exception {
+     void getOneNotExist() throws Exception {
         mockMvc.perform(get("/dayOfWeek/6"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())

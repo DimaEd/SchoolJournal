@@ -1,7 +1,6 @@
 package com.ednach.controller;
 
 import com.ednach.model.DayOfWeek;
-import com.ednach.component.LocalizedMessageSource;
 import com.ednach.dto.DayOfWeekDto;
 import com.ednach.service.DayOfWeekService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +22,6 @@ public class DayOfWeekController {
 
     private final Mapper mapper;
     private final DayOfWeekService dayOfWeekService;
-    private final LocalizedMessageSource localizedMessageSource;
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<DayOfWeekDto>> getAll() {

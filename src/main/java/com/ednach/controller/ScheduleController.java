@@ -26,11 +26,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/schedule")
 public class ScheduleController {
 
-    final private Mapper mapper;
-    final private LocalizedMessageSource localizedMessageSource;
-    final private ScheduleService scheduleService;
-    final private ClassroomService classroomService;
-    final private DayOfWeekService dayOfWeekService;
+    private final Mapper mapper;
+    private final LocalizedMessageSource localizedMessageSource;
+    private final ScheduleService scheduleService;
+    private final ClassroomService classroomService;
+    private final DayOfWeekService dayOfWeekService;
 
     /**
      * Finds all schedule entities and maps them to DTO
@@ -50,14 +50,14 @@ public class ScheduleController {
      * Finds all schedule entities and maps them to DTO
      *
      * @param className-classroom entity name
-     * @param dayWeek- dayOfWeek entity dayWeek
+     * @param dayWeek-            dayOfWeek entity dayWeek
      * @return ResponseEntity with the given body and status code
      */
-    @RequestMapping(value = "/class/{className},{dayWeek}",method = RequestMethod.GET)
-    public ResponseEntity<List<ScheduleResponseDto>> getAllScheduleByDayAndClass(@PathVariable String className , @PathVariable String dayWeek) {
+    @RequestMapping(value = "/class/{className},{dayWeek}", method = RequestMethod.GET)
+    public ResponseEntity<List<ScheduleResponseDto>> getAllScheduleByDayAndClass(@PathVariable String className, @PathVariable String dayWeek) {
         Classroom classroom = classroomService.findByClassName(className);
         DayOfWeek day = dayOfWeekService.findByDayOfWeek(dayWeek);
-        final List<Schedule> schedules = scheduleService.findScheduleByClassroomAndDayOfWeek(classroom,day);
+        final List<Schedule> schedules = scheduleService.findScheduleByClassroomAndDayOfWeek(classroom, day);
         final List<ScheduleResponseDto> scheduleResponseDtoList = schedules.stream()
                 .map((schedule) -> mapper.map(schedule, ScheduleResponseDto.class))
                 .collect(Collectors.toList());
@@ -93,7 +93,7 @@ public class ScheduleController {
      * Updates schedule entity with transferred parameters by entities id and maps it to DTO
      *
      * @param scheduleRequestDto - the body of the web request
-     * @param id                  - schedule entity id
+     * @param id                 - schedule entity id
      * @return - ResponseEntity with the given body and status code
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -116,15 +116,15 @@ public class ScheduleController {
         scheduleService.deleteById(id);
     }
 
-    private Schedule getSchedule(ScheduleRequestDto scheduleRequestDto){
+    private Schedule getSchedule(ScheduleRequestDto scheduleRequestDto) {
         final Schedule schedule = mapper.map(scheduleRequestDto, Schedule.class);
-       final Classroom classroom = new Classroom();
-       classroom.setId(scheduleRequestDto.getClassroomId());
-       final Discipline discipline = new Discipline();
-       discipline.setId(scheduleRequestDto.getDisciplineId());
-       final DayOfWeek dayOfWeek = new DayOfWeek();
+        final Classroom classroom = new Classroom();
+        classroom.setId(scheduleRequestDto.getClassroomId());
+        final Discipline discipline = new Discipline();
+        discipline.setId(scheduleRequestDto.getDisciplineId());
+        final DayOfWeek dayOfWeek = new DayOfWeek();
         dayOfWeek.setId(scheduleRequestDto.getDayOfWeekId());
-       discipline.setId(scheduleRequestDto.getDisciplineId());
+        discipline.setId(scheduleRequestDto.getDisciplineId());
         classroom.setId(scheduleRequestDto.getClassroomId());
         dayOfWeek.setId(scheduleRequestDto.getDayOfWeekId());
 
