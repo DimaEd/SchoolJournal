@@ -28,6 +28,11 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public Role findByRoleName(String roleName) {
+        return roleRepository.findByName(roleName);
+    }
+
+    @Override
     public Role findById(Long id) {
         return roleRepository.findById(id).orElseThrow(() -> new RuntimeException(localizedMessageSource.getMessage("error.role.notExist", new Object[]{})));
     }

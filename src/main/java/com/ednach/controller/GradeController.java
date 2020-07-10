@@ -5,7 +5,7 @@ import com.ednach.model.Discipline;
 import com.ednach.model.Grade;
 import com.ednach.model.Schoolboy;
 import com.ednach.component.LocalizedMessageSource;
-import com.ednach.dto.responce.GradeResponseDto;
+import com.ednach.dto.response.GradeResponseDto;
 import com.ednach.model.Teacher;
 import com.ednach.service.GradeService;
 import com.ednach.service.SchoolboyService;

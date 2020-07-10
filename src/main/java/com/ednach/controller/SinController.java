@@ -1,7 +1,7 @@
 package com.ednach.controller;
 
 import com.ednach.dto.request.SinRequestDto;
-import com.ednach.dto.responce.*;
+import com.ednach.dto.response.*;
 import com.ednach.model.Schoolboy;
 import com.ednach.model.Sin;
 import com.ednach.repository.projection.SinProjection;

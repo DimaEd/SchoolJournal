@@ -1,6 +1,6 @@
 package com.ednach.config;
 
-import com.ednach.dto.responce.ErrorResponseDto;
+import com.ednach.dto.response.ErrorResponseDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;

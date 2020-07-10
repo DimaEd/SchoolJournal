@@ -13,11 +13,12 @@ CREATE TABLE users (
   id bigint(8) NOT NULL AUTO_INCREMENT,
   firstName varchar(45) NOT NULL,
   lastName varchar(45) NOT NULL,
+  email varchar(50) NOT NULL,
   password varchar(100) NOT NULL,
   PRIMARY KEY (id)
 );
 
-INSERT INTO users VALUES (1,'Moroz','Pavel',''),(2,'Petrova','Maria',''),(3,'Gausa','Irina',''),(4,'Moroz','Vala',''),(8,'Ednach','Dmitry',''),(9,'Ivanov','Roma','$2a$10$VSKdQ1cjxr05iNCn.p/cJuOO1Iyr/50CmgifYoWxD8VIwpZIb1MZi');
+INSERT INTO users VALUES (1,'Moroz','Pavel','morozPavel@mail.ru','$2a$10$l/D6AGt8vYJG.cW/lIT44uy.TAYkV9UYJ8bPuGKBwuva/ERc9Ct4K'),(2,'Petrova','Maria','petrovaMaria@mail.ru','$2a$10$l/D6AGt8vYJG.cW/lIT44uy.TAYkV9UYJ8bPuGKBwuva/ERc9Ct4K'),(3,'Gausa','Irina','gausaIrina@mail.ru',''),(4,'Moroz','Vala','morozGala@mail.ru',''),(8,'Ednach','Dmitry','ednachDmitry@mail.ru',''),(9,'Ivanov','Roma','ivanovRoma@mail.ru','$2a$10$l/D6AGt8vYJG.cW/lIT44uy.TAYkV9UYJ8bPuGKBwuva/ERc9Ct4K');
 
 
 DROP TABLE IF EXISTS schoolboy;
@@ -106,4 +107,4 @@ CREATE TABLE IF NOT EXISTS USER_ROLE
     FOREIGN KEY (USER_ID) REFERENCES USERS (ID),
     FOREIGN KEY (ROLE_ID) REFERENCES ROLES (ID)
 );
-INSERT INTO user_role VALUES (9,1),(1,3),(2,1),(3,1);
+INSERT INTO user_role VALUES (9,1),(1,3),(2,4),(3,1);

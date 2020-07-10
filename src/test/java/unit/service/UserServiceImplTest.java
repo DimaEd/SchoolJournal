@@ -44,12 +44,12 @@ class UserServiceImplTest {
     }
 
     @Test
-    void findByUserFirstName() {
+    void findByFirstName() {
         final User user = new User();
         user.setFirstName("Moroz");
         List<User> userList = Collections.singletonList(user);
-        when(userRepository.findUserByFirstName(any(String.class))).thenReturn(userList);
-        assertEquals(userService.findUserByFirstName("Moroz"), userList);
+        when(userRepository.findByFirstName(any(String.class))).thenReturn(userList);
+        assertEquals(userService.findByFirstName("Moroz"), userList);
     }
 
     @Test
@@ -61,12 +61,12 @@ class UserServiceImplTest {
     }
 
     @Test
-    void findByFirstName() {
+    void findByEmail() {
         final User user = new User();
         user.setId(1L);
-        user.setFirstName("Ednach");
-        when(userRepository.findByFirstName(any(String.class))).thenReturn(user);
-        assertEquals(userService.findByFirstName("Ednach"), user);
+        user.setEmail("moroz@mail.ru");
+        when(userRepository.findByEmail(any(String.class))).thenReturn(user);
+        assertEquals(userService.findByEmail("moroz@mail.ru"), user);
     }
 
     @Test

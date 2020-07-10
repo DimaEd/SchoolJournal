@@ -6,6 +6,99 @@
 	},
 	"item": [
 		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "SignIn",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"petrovaMaria@mail.ru\", \"password\":\"1234\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/SJ/authentication/signIn",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"SJ",
+								"authentication",
+								"signIn"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"firstName\":\"Klimko\",\"lastName\":\"Toly\", \"password\":\"1111\",\"email\":\"klimkoToly@mail.ru\",\"roles\":[\"ROLE_ADMIN\"]}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/SJ/authentication/signUp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"SJ",
+								"authentication",
+								"signUp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/SJ/authentication/refresh?token=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3JvelBhdmVsQG1haWwucnUiLCJpYXQiOjE1OTQ0MTI4MDUsImV4cCI6MTU5NDQxMzQwNX0.N9evwNuIigF2ez-bUz1FqaZ_2gFuMSz36qCRVRacA-wibMI2kFwb9dB_Z-EsO6b3eJc76hJcnQIoFvUACHvlSw ",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"SJ",
+								"authentication",
+								"refresh"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3JvelBhdmVsQG1haWwucnUiLCJpYXQiOjE1OTQ0MTI4MDUsImV4cCI6MTU5NDQxMzQwNX0.N9evwNuIigF2ez-bUz1FqaZ_2gFuMSz36qCRVRacA-wibMI2kFwb9dB_Z-EsO6b3eJc76hJcnQIoFvUACHvlSw "
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
 			"name": "Users",
 			"item": [
 				{
@@ -34,7 +127,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/SJ/users/Ivanov",
+							"raw": "http://localhost:8080/SJ/users/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -43,7 +136,28 @@
 							"path": [
 								"SJ",
 								"users",
-								"Ivanov"
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllByFirstName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/SJ/users/MOROZ",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"SJ",
+								"users",
+								"MOROZ"
 							]
 						}
 					},
@@ -56,7 +170,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"firstName\":\"Ola\",\"lastName\":\"Tolstik\", \"password\":\"1111\",\"rolesId\":[1]}",
+							"raw": "{\"firstName\":\"Ola\",\"lastName\":\"Tolstik\",\"email\":\"tolstik@Mail.ru\", \"password\":\"1111\",\"rolesId\":[1]}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -85,7 +199,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"id\":10,\"firstName\":\"Gala\",\"lastName\":\"Tolstik\", \"password\":\"6543\",\"rolesId\":[3]}",
+							"raw": "{\"id\":10,\"firstName\":\"Gala\",\"lastName\":\"Tolstik\",\"email\":\"tolstik@mail.ru\", \"password\":\"6543\",\"rolesId\":[3]}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -114,7 +228,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/SJ/users/9",
+							"raw": "http://localhost:8080/SJ/users/10",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -123,7 +237,7 @@
 							"path": [
 								"SJ",
 								"users",
-								"9"
+								"10"
 							]
 						}
 					},
@@ -203,7 +317,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"id\":6, \"name\":\"ROLE_BOSS\"}",
+							"raw": "{\"id\":5, \"name\":\"ROLE_BOSS\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -211,7 +325,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/SJ/roles/6",
+							"raw": "http://localhost:8080/SJ/roles/5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -220,7 +334,7 @@
 							"path": [
 								"SJ",
 								"roles",
-								"6"
+								"5"
 							]
 						}
 					},
@@ -232,7 +346,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/SJ/roles/6",
+							"raw": "http://localhost:8080/SJ/roles/5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -241,7 +355,7 @@
 							"path": [
 								"SJ",
 								"roles",
-								"6"
+								"5"
 							]
 						}
 					},
@@ -301,7 +415,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"userId\":2}",
+							"raw": "{\"userId\":4}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -592,10 +706,20 @@
 				{
 					"name": "Delete",
 					"request": {
-						"method": "GET",
+						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "http://localhost:8080/SJ/sins/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"SJ",
+								"sins",
+								"2"
+							]
 						}
 					},
 					"response": []
@@ -772,7 +896,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\"disciplineId\":1,\"mark\":12,\"date\":\"12.05.2020\",\"schoolboyId\":1,\"teacherId\":2}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1094,6 +1218,53 @@
 								"SJ",
 								"disciplines",
 								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "DaysOfWeek",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/SJ/dayOfWeek",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"SJ",
+								"dayOfWeek"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/SJ/dayOfWeek/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"SJ",
+								"dayOfWeek",
+								"3"
 							]
 						}
 					},

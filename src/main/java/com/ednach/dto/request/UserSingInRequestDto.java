@@ -18,7 +18,7 @@ public class UserSingInRequestDto {
     @NotNull(message = "{user.name.notNull}")
     @NotEmpty(message = "{user.name.notEmpty}")
     @Size(min = 3, max = 50, message = "{user.name.size}")
-    private String username;
+    private String email;
 
     @NotNull(message = "{user.password.notNull}")
     @NotEmpty(message = "{user.password.notEmpty}")

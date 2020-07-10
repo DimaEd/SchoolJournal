@@ -3,7 +3,7 @@ package com.ednach.controller;
 import com.ednach.model.User;
 import com.ednach.component.LocalizedMessageSource;
 import com.ednach.dto.request.TeacherRequestDto;
-import com.ednach.dto.responce.TeacherResponseDto;
+import com.ednach.dto.response.TeacherResponseDto;
 import com.ednach.model.Teacher;
 import com.ednach.service.TeacherService;
 import lombok.RequiredArgsConstructor;

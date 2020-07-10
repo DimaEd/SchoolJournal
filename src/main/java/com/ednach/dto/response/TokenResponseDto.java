@@ -1,4 +1,4 @@
-package com.ednach.dto.responce;
+package com.ednach.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,13 +8,13 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class TokenResponseDTO {
+public class TokenResponseDto {
 
     private String token;
 
     private String type = "Bearer";
 
-    public TokenResponseDTO(String accessToken) {
+    public TokenResponseDto(String accessToken) {
         this.token = accessToken;
     }
 }

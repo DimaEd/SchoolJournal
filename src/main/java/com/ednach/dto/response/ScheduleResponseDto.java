@@ -1,4 +1,4 @@
-package com.ednach.dto.responce;
+package com.ednach.dto.response;
 
 import com.ednach.dto.DayOfWeekDto;
 import lombok.Getter;

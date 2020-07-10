@@ -9,6 +9,6 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @ComponentScan(basePackages = "com.ednach")
-@Import({WebConfig.class, DataBaseConfig.class, MessagesConfig.class})
+@Import({WebConfig.class, DataBaseConfig.class, MessagesConfig.class,SecurityConfiguration.class})
 public class AppConfig {
 }

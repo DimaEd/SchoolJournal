@@ -5,7 +5,7 @@ import com.ednach.dto.request.UserRequestDto;
 import com.ednach.model.Role;
 import com.ednach.model.User;
 import com.ednach.service.UserService;
-import com.ednach.dto.responce.UserResponseDto;
+import com.ednach.dto.response.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.dozer.Mapper;
 import org.springframework.http.HttpStatus;
@@ -27,10 +27,7 @@ public class UserController {
     private final UserService userService;
     private final LocalizedMessageSource localizedMessageSource;
 
-    /**
-     * @return
-     */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<List<UserResponseDto>> getAll() {
         final List<User> users = userService.findAll();
         final List<UserResponseDto> userResponseDtoList = users.stream()
@@ -39,29 +36,28 @@ public class UserController {
         return new ResponseEntity<>(userResponseDtoList, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{firstName}", method = RequestMethod.GET)
-    public ResponseEntity<List<UserResponseDto>> getAllByFirstName(@PathVariable String firstName) {
-        final List<User> users = userService.findUserByFirstName(firstName);
+    @GetMapping(value = "firstName")
+    public ResponseEntity<List<UserResponseDto>> getAllByFirstName(@RequestParam(value="firstName") String firstName) {
+        final List<User> users = userService.findByFirstName(firstName);
         final List<UserResponseDto> userResponseDtoList = users.stream()
                 .map((user) -> mapper.map(user, UserResponseDto.class))
                 .collect(Collectors.toList());
         return new ResponseEntity<>(userResponseDtoList, HttpStatus.OK);
     }
 
-    @GetMapping("{id:[\\d]+}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<UserResponseDto> getOne(@PathVariable Long id) {
         final UserResponseDto userResponseDto = mapper.map(userService.findById(id), UserResponseDto.class);
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
-
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<UserResponseDto> save(@Valid @RequestBody UserRequestDto userRequestDto) {
         userRequestDto.setId(null);
         final UserResponseDto userResponseDto = mapper.map(userService.save(getUser(userRequestDto)), UserResponseDto.class);
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public ResponseEntity<UserResponseDto> update(@Valid @RequestBody UserRequestDto userRequestDto, @PathVariable Long id) {
         if (!Objects.equals(id, userRequestDto.getId())) {
             throw new RuntimeException(localizedMessageSource.getMessage("controller.user.unexpectedId", new Object[]{}));
@@ -70,7 +66,7 @@ public class UserController {
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void delete(@PathVariable Long id) {
         userService.deleteById(id);

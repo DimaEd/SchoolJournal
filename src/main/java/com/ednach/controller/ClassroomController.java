@@ -2,7 +2,7 @@ package com.ednach.controller;
 
 import com.ednach.component.LocalizedMessageSource;
 import com.ednach.dto.request.ClassroomRequestDto;
-import com.ednach.dto.responce.ClassroomResponseDto;
+import com.ednach.dto.response.ClassroomResponseDto;
 import com.ednach.model.Classroom;
 import com.ednach.model.Teacher;
 import com.ednach.service.ClassroomService;

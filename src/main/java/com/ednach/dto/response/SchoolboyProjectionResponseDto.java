@@ -1,4 +1,4 @@
-package com.ednach.dto.responce;
+package com.ednach.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;

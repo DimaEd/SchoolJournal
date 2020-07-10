@@ -48,16 +48,23 @@ public class User {
     private Teacher teacher;
 
     @Column(unique = true, nullable = false)
+    @NotNull(message = "{user.email.notNull}")
+    @NotEmpty(message = "{user.email.notEmpty}")
+    @Size(min = 6, max = 50, message = "{user.email.size}")
+    private String email;
+
+    @Column(unique = true, nullable = false)
     @NotNull(message = "{user.password.notNull}")
     @NotEmpty(message = "{user.password.notEmpty}")
     @Size(min = 3, max = 100, message = "{user.password.size}")
     private String password;
 
-    public User(Long id, String firstName, String lastName, Set<Role> roles, String password) {
+    public User(Long id, String firstName, String lastName, Set<Role> roles, String email, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.roles = roles;
+        this.email = email;
         this.password = password;
     }
 }

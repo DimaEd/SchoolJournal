@@ -16,6 +16,7 @@
         <maven.compiler.target>1.9</maven.compiler.target>
         <org.spring.core>5.1.5.RELEASE</org.spring.core>
         <org.spring.data>2.1.8.RELEASE</org.spring.data>
+        <org.spring.security>5.2.1.RELEASE</org.spring.security>
         <hibernate.entitymanager>5.4.2.Final</hibernate.entitymanager>
         <com.h2.driver>1.4.197</com.h2.driver>
         <javax.servlet>4.0.1</javax.servlet>
@@ -28,6 +29,7 @@
         <hamcrest>2.1</hamcrest>
         <jsonpath>2.4.0</jsonpath>
         <javax.el>3.0.1-b08</javax.el>
+        <jjwt>0.9.1</jjwt>
     </properties>
 
     <dependencies>
@@ -139,6 +141,32 @@
             <artifactId>json-path</artifactId>
             <version>${jsonpath}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${org.spring.security}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${org.spring.security}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${org.spring.security}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <version>${org.spring.security}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jjwt}</version>
         </dependency>
     </dependencies>
 

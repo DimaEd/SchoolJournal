@@ -13,17 +13,11 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    boolean existsByPassword(String password);
+    @Query("SELECT u FROM User u WHERE  LOWER(u.firstName) LIKE LOWER(CONCAT('%',:firstName))")
+    List<User> findByFirstName(@Param("firstName") String firstName);
 
-    boolean existsByFirstName(String firstName);
+    User findByEmail(String email);
 
-    boolean existsByLastName(String lastName);
-
-    @Query("SELECT u FROM User u WHERE LOWER(u.firstName) LIKE LOWER(CONCAT('%',:firstName))")
-    List<User> findUserByFirstName(@Param("firstName") String firstName);
-
-    User findByFirstName(String firstName);
-
-    User findByPassword(String password);
+    boolean existsByEmail(String email);
 
 }

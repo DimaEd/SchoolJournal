@@ -6,6 +6,7 @@ import com.ednach.service.RoleService;
 import com.ednach.service.UserService;
 import com.ednach.component.LocalizedMessageSource;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,7 @@ public class UserServiceImpl implements UserService {
     private final LocalizedMessageSource localizedMessageSource;
     private final RoleService roleService;
     private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
 
     @Override
     public List<User> findAll() {
@@ -35,19 +37,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByFirstName(String firstName) {
+    public List<User> findByFirstName(String firstName) {
         return userRepository.findByFirstName(firstName);
     }
 
     @Override
-    public List<User> findUserByFirstName(String firstName) {
-        return userRepository.findUserByFirstName(firstName);
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override
     public User save(User user) {
         validate(user.getId() != null, localizedMessageSource.getMessage("error.user.notHaveId", new Object[]{}));
-        validate(userRepository.existsByFirstName(user.getFirstName())&&userRepository.existsByLastName(user.getLastName()),localizedMessageSource.getMessage("error.user.firstNameWithLastName.notUnique",new Object[]{}));
+        validate(userRepository.existsByEmail(user.getEmail()),localizedMessageSource.getMessage("error.user.email.notUnique",new Object[]{}));
         return saveAndFlush(user);
     }
 
@@ -55,9 +57,9 @@ public class UserServiceImpl implements UserService {
     public User update(User user) {
         final Long id = user.getId();
         validate(id == null, localizedMessageSource.getMessage("error.user.haveId", new Object[]{}));
-        final User duplicateUser = userRepository.findByFirstName(user.getFirstName());
+        final User duplicateUser = userRepository.findByEmail(user.getEmail());
         final boolean isDuplicateExists = duplicateUser != null && !Objects.equals(duplicateUser.getId(), id);
-        validate(isDuplicateExists, localizedMessageSource.getMessage("error.user.firstName.notUnique", new Object[]{}));
+        validate(isDuplicateExists, localizedMessageSource.getMessage("error.user.email.notUnique", new Object[]{}));
         findById(id);
         return saveAndFlush(user);
     }
@@ -81,6 +83,7 @@ public class UserServiceImpl implements UserService {
             validate(role == null || role.getId() == null, localizedMessageSource.getMessage("error.user.role.isNull", new Object[]{}));
             role.setName(roleService.findById(role.getId()).getName());
         });
+        user.setPassword(encoder.encode(user.getPassword()));
         return userRepository.saveAndFlush(user);
     }
 

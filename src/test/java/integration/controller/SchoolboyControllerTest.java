@@ -41,8 +41,6 @@ class SchoolboyControllerTest {
     public void setup() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
-// I want to get schoolboy without teacher in classroom object.
-    // like here -->   {"id":2,"user":{"id":8,"firstName":"Ednach","lastName":"Dmitry"},"classroom":{"id":2,"className":"11B"}}
 
     @Test
     void getAll() throws Exception {
@@ -64,7 +62,7 @@ class SchoolboyControllerTest {
     }
 
     @Test
-    public void getOneNotExist() throws Exception {
+    void getOneNotExist() throws Exception {
         mockMvc.perform(get("/schoolboys/5"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -73,15 +71,16 @@ class SchoolboyControllerTest {
     }
 
     @Test
-    public void testSaveExistBadRequest() throws Exception {
+    void testSaveExistBadRequest() throws Exception {
         mockMvc.perform(post("/schoolboys").contentType(APPLICATION_JSON_UTF8).content("{\"userId\":1,\"classroomId\":1}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
                 .andExpect(jsonPath("$.message").value("Schoolboy user is not unique!"))
                 .andReturn();
     }
+
     @Test
-    public void testSaveHaveIdBadRequest() throws Exception {
+    void testSaveHaveIdBadRequest() throws Exception {
         mockMvc.perform(post("/schoolboys/3").contentType(APPLICATION_JSON_UTF8).content("{\"userId\":1,\"classroomId\":1}"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError())
@@ -89,7 +88,7 @@ class SchoolboyControllerTest {
     }
 
     @Test
-    void save()  throws Exception {
+    void save() throws Exception {
         mockMvc.perform(post("/schoolboys").contentType(APPLICATION_JSON_UTF8).content("{\"userId\":3,\"classroomId\":1}"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -99,7 +98,7 @@ class SchoolboyControllerTest {
 
 
     @Test
-    public void testPutOneBadRequest() throws Exception {
+    void testPutOneBadRequest() throws Exception {
         mockMvc.perform(put("/schoolboys/1").contentType(APPLICATION_JSON_UTF8).content("{\"id\":2,\"userId\":1,\"classroomId\":1}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -108,7 +107,7 @@ class SchoolboyControllerTest {
     }
 
     @Test
-    public void testPutOneNotExist() throws Exception {
+    void testPutOneNotExist() throws Exception {
         mockMvc.perform(put("/schoolboys/5").contentType(APPLICATION_JSON_UTF8).content("{\"id\":5,\"userId\":3,\"classroomId\":1}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -118,7 +117,7 @@ class SchoolboyControllerTest {
 
 
     @Test
-    public void testPutIdNullBadRequest() throws Exception {
+    void testPutIdNullBadRequest() throws Exception {
         mockMvc.perform(put("/schoolboys/2").contentType(APPLICATION_JSON_UTF8).content("{\"id\":1,\"userId\":3,\"classroomId\":1}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -127,7 +126,7 @@ class SchoolboyControllerTest {
     }
 
     @Test
-    public void testPutOneExist() throws Exception {
+    void testPutOneExist() throws Exception {
         mockMvc.perform(put("/schoolboys/2").contentType(APPLICATION_JSON_UTF8).content("{\"id\":2,\"userId\":1,\"classroomId\":1}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -136,7 +135,7 @@ class SchoolboyControllerTest {
     }
 
     @Test
-    void update()  throws Exception {
+    void update() throws Exception {
         mockMvc.perform(put("/schoolboys/1").contentType(APPLICATION_JSON_UTF8).content("{\"id\":1,\"userId\":3,\"classroomId\":1}"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -145,7 +144,7 @@ class SchoolboyControllerTest {
     }
 
     @Test
-    public void testDeleteExist() throws Exception {
+    void testDeleteExist() throws Exception {
         mockMvc.perform(get("/schoolboys/2"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -153,7 +152,7 @@ class SchoolboyControllerTest {
     }
 
     @Test
-    public void testDeleteNotExist() throws Exception {
+    void testDeleteNotExist() throws Exception {
         mockMvc.perform(delete("/schoolboys/5"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())

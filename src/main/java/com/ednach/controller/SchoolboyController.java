@@ -1,10 +1,10 @@
 package com.ednach.controller;
 
 import com.ednach.dto.request.SchoolboyRequestDto;
-import com.ednach.dto.responce.ClassroomProjectionResponseDto;
-import com.ednach.dto.responce.SchoolboyProjectionResponseDto;
-import com.ednach.dto.responce.SchoolboyResponseDto;
-import com.ednach.dto.responce.UserResponseDto;
+import com.ednach.dto.response.ClassroomProjectionResponseDto;
+import com.ednach.dto.response.SchoolboyProjectionResponseDto;
+import com.ednach.dto.response.SchoolboyResponseDto;
+import com.ednach.dto.response.UserResponseDto;
 import com.ednach.model.Schoolboy;
 import com.ednach.model.User;
 import com.ednach.component.LocalizedMessageSource;

@@ -1,7 +1,7 @@
 package com.ednach.controller;
 
 import com.ednach.dto.request.ScheduleRequestDto;
-import com.ednach.dto.responce.ScheduleResponseDto;
+import com.ednach.dto.response.ScheduleResponseDto;
 import com.ednach.model.Classroom;
 import com.ednach.model.DayOfWeek;
 import com.ednach.model.Discipline;
