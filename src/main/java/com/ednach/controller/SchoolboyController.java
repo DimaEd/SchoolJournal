@@ -31,7 +31,7 @@ public class SchoolboyController {
     private final LocalizedMessageSource localizedMessageSource;
     private final SchoolboyService schoolboyService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<List<SchoolboyProjectionResponseDto>> getAll() {
         final List<SchoolboyProjection> schoolboys = schoolboyService.findAll();
         final List<SchoolboyProjectionResponseDto> schoolboyResponseDtoList = schoolboys.stream()
@@ -40,20 +40,20 @@ public class SchoolboyController {
         return new ResponseEntity<>(schoolboyResponseDtoList, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public ResponseEntity<SchoolboyResponseDto> getOne(@PathVariable Long id) {
         final SchoolboyResponseDto schoolboyResponseDto = mapper.map(schoolboyService.findById(id), SchoolboyResponseDto.class);
         return new ResponseEntity<>(schoolboyResponseDto, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<SchoolboyResponseDto> save(@Valid @RequestBody SchoolboyRequestDto schoolboyRequestDto) {
         schoolboyRequestDto.setId(null);
         final SchoolboyResponseDto schoolboyResponseDto = mapper.map(schoolboyService.save(getSchoolboy(schoolboyRequestDto)), SchoolboyResponseDto.class);
         return new ResponseEntity<>(schoolboyResponseDto, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public ResponseEntity<SchoolboyResponseDto> update(@Valid @RequestBody SchoolboyRequestDto schoolboyRequestDto, @PathVariable Long id) {
         if (!Objects.equals(id, schoolboyRequestDto.getId())) {
             throw new RuntimeException(localizedMessageSource.getMessage("controller.schoolboy.unexpectedId", new Object[]{}));
@@ -62,7 +62,7 @@ public class SchoolboyController {
         return new ResponseEntity<>(schoolboyResponseDto, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void delete(@PathVariable Long id) {
         schoolboyService.deleteById(id);

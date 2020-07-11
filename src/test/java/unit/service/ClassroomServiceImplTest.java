@@ -79,6 +79,7 @@ class ClassroomServiceImplTest {
         teacher.setId(1L);
         classroom.setTeacher(teacher);
         when(classroomRepository.saveAndFlush(classroom)).thenReturn(classroom);
+        when(classroomRepository.findById(any(Long.class))).thenReturn(Optional.of(classroom));
         when(teacherService.findById(1L)).thenReturn(teacher);
         assertEquals(classroomService.update(classroom), classroom);
     }

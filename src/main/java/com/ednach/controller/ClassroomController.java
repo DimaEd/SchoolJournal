@@ -38,7 +38,7 @@ public class ClassroomController {
      *
      * @return - ResponseEntity with the given body and status code
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<List<ClassroomResponseDto>> getAll() {
         final List<Classroom> classrooms = classroomService.findAll();
         final List<ClassroomResponseDto> classroomResponseDtoList = classrooms.stream()
@@ -53,7 +53,7 @@ public class ClassroomController {
      * @param id - classroom entity id
      * @return - ResponseEntity with the given body and status code
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public ResponseEntity<ClassroomResponseDto> getOne(@PathVariable Long id) {
         final ClassroomResponseDto classroomResponseDto = mapper.map(classroomService.findById(id), ClassroomResponseDto.class);
         return new ResponseEntity<>(classroomResponseDto, HttpStatus.OK);
@@ -65,7 +65,7 @@ public class ClassroomController {
      * @param classroomRequestDto - the body of the web request
      * @return - ResponseEntity with the given body and status code
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<ClassroomResponseDto> save(@Valid @RequestBody ClassroomRequestDto classroomRequestDto) {
         classroomRequestDto.setId(null);
         final ClassroomResponseDto classroomResponseDto = mapper.map(classroomService.save(getClassroom(classroomRequestDto)), ClassroomResponseDto.class);
@@ -79,7 +79,7 @@ public class ClassroomController {
      * @param id                  - classroom entity id
      * @return - ResponseEntity with the given body and status code
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public ResponseEntity<ClassroomResponseDto> update(@Valid @RequestBody ClassroomRequestDto classroomRequestDto, @PathVariable Long id) {
         if (!Objects.equals(id, classroomRequestDto.getId())) {
             throw new RuntimeException(localizedMessageSource.getMessage("controller.classroom.unexpectedId", new Object[]{}));
@@ -93,7 +93,7 @@ public class ClassroomController {
      *
      * @param id - classroom entity id
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void delete(@PathVariable Long id) {
         classroomService.deleteById(id);

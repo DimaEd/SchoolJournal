@@ -37,7 +37,7 @@ public class RoleController {
      *
      * @return - ResponseEntity with the given body and status code
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<List<RoleDto>> getAll() {
         final List<Role> roles = roleService.findAll();
         final List<RoleDto> roleDtoList = roles.stream()
@@ -52,7 +52,7 @@ public class RoleController {
      * @param id - role entity id
      * @return - ResponseEntity with the given body and status code
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public ResponseEntity<RoleDto> getOne(@PathVariable Long id) {
         final RoleDto roleDto = mapper.map(roleService.findById(id), RoleDto.class);
         return new ResponseEntity<>(roleDto, HttpStatus.OK);
@@ -64,7 +64,7 @@ public class RoleController {
      * @param role - the body of the web request
      * @return - ResponseEntity with the given body and status code
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<RoleDto> save(@Valid @RequestBody RoleDto role) {
         role.setId(null);
         final RoleDto roleDto = mapper.map(roleService.save(mapper.map(role, Role.class)), RoleDto.class);
@@ -78,7 +78,7 @@ public class RoleController {
      * @param id   - role entity id
      * @return - ResponseEntity with the given body and status code
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public ResponseEntity<RoleDto> update(@Valid @RequestBody RoleDto role, @PathVariable Long id) {
         if (!Objects.equals(id, role.getId())) {
             throw new RuntimeException(localizedMessageSource.getMessage("controller.role.unexpectedId", new Object[]{}));
@@ -92,7 +92,7 @@ public class RoleController {
      *
      * @param id - role entity id
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void delete(@PathVariable Long id) {
         roleService.deleteById(id);

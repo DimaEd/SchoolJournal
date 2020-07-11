@@ -38,7 +38,7 @@ public class GradeController {
      *
      * @return - ResponseEntity with the given body and status code
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<List<GradeResponseDto>> getAll() {
         final List<Grade> grades = gradeService.findAll();
         final List<GradeResponseDto> gradeResponseDtoList = grades.stream()
@@ -53,7 +53,7 @@ public class GradeController {
      * @param id - schoolboy entity id
      * @return ResponseEntity with the given body and status code
      */
-    @RequestMapping(value = "/schoolboy/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/schoolboy/{id}")
     public ResponseEntity<List<GradeResponseDto>> getAllGrades(@PathVariable Long id) {
         Schoolboy b = schoolboyService.findById(id);
         final List<Grade> grades = gradeService.findBySchoolboy(b);
@@ -69,7 +69,7 @@ public class GradeController {
      * @param id - grade entity id
      * @return - ResponseEntity with the given body and status code
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public ResponseEntity<GradeResponseDto> getOne(@PathVariable Long id) {
         final GradeResponseDto gradeResponseDto = mapper.map(gradeService.findById(id), GradeResponseDto.class);
         return new ResponseEntity<>(gradeResponseDto, HttpStatus.OK);
@@ -81,7 +81,7 @@ public class GradeController {
      * @param gradeRequestDto - the body of the web request
      * @return - ResponseEntity with the given body and status code
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<GradeResponseDto> save(@Valid @RequestBody GradeRequestDto gradeRequestDto) {
         gradeRequestDto.setId(null);
         final GradeResponseDto gradeResponseDto = mapper.map(gradeService.save(getGrade(gradeRequestDto)), GradeResponseDto.class);
@@ -95,7 +95,7 @@ public class GradeController {
      * @param id              - grade entity id
      * @return - ResponseEntity with the given body and status code
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public ResponseEntity<GradeResponseDto> update(@Valid @RequestBody GradeRequestDto gradeRequestDto, @PathVariable Long id) {
         if (!Objects.equals(id, gradeRequestDto.getId())) {
             throw new RuntimeException(localizedMessageSource.getMessage("controller.grade.unexpectedId", new Object[]{}));
@@ -109,7 +109,7 @@ public class GradeController {
      *
      * @param id - grade entity id
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void delete(@PathVariable Long id) {
         gradeService.deleteById(id);

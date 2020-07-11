@@ -38,7 +38,7 @@ public class DisciplineController {
      *
      * @return - ResponseEntity with the given body and status code
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<List<DisciplineResponseDto>> getAll() {
         final List<Discipline> disciplines = disciplineService.findAll();
         final List<DisciplineResponseDto> disciplineResponseDtoList = disciplines.stream()
@@ -53,7 +53,7 @@ public class DisciplineController {
      * @param id - discipline entity id
      * @return - ResponseEntity with the given body and status code
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public ResponseEntity<DisciplineResponseDto> getOne(@PathVariable Long id) {
         final DisciplineResponseDto disciplineResponseDto = mapper.map(disciplineService.findById(id), DisciplineResponseDto.class);
         return new ResponseEntity<>(disciplineResponseDto, HttpStatus.OK);
@@ -65,7 +65,7 @@ public class DisciplineController {
      * @param disciplineRequestDto - the body of the web request
      * @return - ResponseEntity with the given body and status code
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<DisciplineResponseDto> save(@Valid @RequestBody DisciplineRequestDto disciplineRequestDto) {
         disciplineRequestDto.setId(null);
         final DisciplineResponseDto disciplineResponseDto = mapper.map(disciplineService.save(getDiscipline(disciplineRequestDto)), DisciplineResponseDto.class);
@@ -79,7 +79,7 @@ public class DisciplineController {
      * @param id                   - discipline entity id
      * @return - ResponseEntity with the given body and status code
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public ResponseEntity<DisciplineResponseDto> update(@Valid @RequestBody DisciplineRequestDto disciplineRequestDto, @PathVariable Long id) {
         if (!Objects.equals(id, disciplineRequestDto.getId())) {
             throw new RuntimeException(localizedMessageSource.getMessage("controller.discipline.unexpectedId", new Object[]{}));
@@ -93,7 +93,7 @@ public class DisciplineController {
      *
      * @param id - discipline entity id
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void delete(@PathVariable Long id) {
         disciplineService.deleteById(id);

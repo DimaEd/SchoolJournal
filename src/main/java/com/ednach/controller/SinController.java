@@ -30,7 +30,7 @@ public class SinController {
     private final LocalizedMessageSource localizedMessageSource;
     private final SchoolboyService schoolboyService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<List<SinProjectionResponseDto>> getAll() {
         final List<SinProjection> sins = sinService.findAll();
         final List<SinProjectionResponseDto> sinResponseDtoList = sins.stream()
@@ -39,7 +39,7 @@ public class SinController {
         return new ResponseEntity<>(sinResponseDtoList, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/schoolboy/{id}",method = RequestMethod.GET)
+    @GetMapping(value = "/schoolboy/{id}")
     public ResponseEntity<List<SinResponseDto>> getAllSinByType(@PathVariable Long id) {
         Schoolboy schoolboy = schoolboyService.findById(id);
         final List<Sin> sins = sinService.findBySchoolboy(schoolboy);
@@ -49,20 +49,20 @@ public class SinController {
         return new ResponseEntity<>(sinResponseDtoList, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public ResponseEntity<SinResponseDto> getOne(@PathVariable Long id) {
         final SinResponseDto sinResponseDto = mapper.map(sinService.findById(id), SinResponseDto.class);
         return new ResponseEntity<>(sinResponseDto, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<SinResponseDto> save(@Valid @RequestBody SinRequestDto sinRequestDto) {
         sinRequestDto.setId(null);
         final SinResponseDto sinResponseDto = mapper.map(sinService.save(getSin(sinRequestDto)), SinResponseDto.class);
         return new ResponseEntity<>(sinResponseDto, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public ResponseEntity<SinResponseDto> update(@Valid @RequestBody SinRequestDto sinRequestDto, @PathVariable Long id) {
         if (!Objects.equals(id, sinRequestDto.getId())) {
             throw new RuntimeException(localizedMessageSource.getMessage("controller.sin.unexpectedId", new Object[]{}));
@@ -71,7 +71,7 @@ public class SinController {
         return new ResponseEntity<>(sinResponseDto, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void delete(@PathVariable Long id) {
         sinService.deleteById(id);

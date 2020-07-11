@@ -26,7 +26,7 @@ public class TeacherController {
     private final TeacherService teacherService;
     private final LocalizedMessageSource localizedMessageSource;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<List<TeacherResponseDto>> getAll() {
         final List<Teacher> teachers = teacherService.findAll();
         final List<TeacherResponseDto> teacherDtoList = teachers.stream()
@@ -35,20 +35,20 @@ public class TeacherController {
         return new ResponseEntity<>(teacherDtoList, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public ResponseEntity<TeacherResponseDto> getOne(@PathVariable Long id) {
         final TeacherResponseDto teacherDto = mapper.map(teacherService.findById(id), TeacherResponseDto.class);
         return new ResponseEntity<>(teacherDto, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<TeacherResponseDto> save(@Valid @RequestBody TeacherRequestDto teacherRequestDto) {
         teacherRequestDto.setId(null);
         final TeacherResponseDto teacherDto = mapper.map(teacherService.save(getTeacher(teacherRequestDto)), TeacherResponseDto.class);
         return new ResponseEntity<>(teacherDto, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public ResponseEntity<TeacherResponseDto> update(@Valid @RequestBody TeacherRequestDto teacherRequestDto, @PathVariable Long id) {
         if (!Objects.equals(id, teacherRequestDto.getId())) {
             throw new RuntimeException(localizedMessageSource.getMessage("controller.teacher.unexpectedId", new Object[]{}));
@@ -57,7 +57,7 @@ public class TeacherController {
         return new ResponseEntity<>(teacherDto, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void delete(@PathVariable Long id) {
         teacherService.deleteById(id);

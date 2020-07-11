@@ -20,6 +20,7 @@
         <hibernate.entitymanager>5.4.2.Final</hibernate.entitymanager>
         <com.h2.driver>1.4.197</com.h2.driver>
         <javax.servlet>4.0.1</javax.servlet>
+        <javax.jstl>1.2</javax.jstl>
         <jackson.core>2.9.9</jackson.core>
         <hibernate.validator>6.0.16.Final</hibernate.validator>
         <dozer>5.5.1</dozer>
@@ -30,6 +31,8 @@
         <jsonpath>2.4.0</jsonpath>
         <javax.el>3.0.1-b08</javax.el>
         <jjwt>0.9.1</jjwt>
+        <swagger2>2.9.2</swagger2>
+        <swagger-ui>2.9.2</swagger-ui>
     </properties>
 
     <dependencies>
@@ -68,6 +71,11 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>${javax.servlet}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${javax.jstl}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -167,6 +175,16 @@
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
             <version>${jjwt}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger2}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger-ui}</version>
         </dependency>
     </dependencies>
 

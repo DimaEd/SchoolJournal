@@ -37,7 +37,7 @@ public class ScheduleController {
      *
      * @return - ResponseEntity with the given body and status code
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<List<ScheduleResponseDto>> getAll() {
         final List<Schedule> schedules = scheduleService.findAll();
         final List<ScheduleResponseDto> scheduleResponseDtoList = schedules.stream()
@@ -53,7 +53,7 @@ public class ScheduleController {
      * @param dayWeek-            dayOfWeek entity dayWeek
      * @return ResponseEntity with the given body and status code
      */
-    @RequestMapping(value = "/class/{className},{dayWeek}", method = RequestMethod.GET)
+    @GetMapping(value = "/class/{className},{dayWeek}")
     public ResponseEntity<List<ScheduleResponseDto>> getAllScheduleByDayAndClass(@PathVariable String className, @PathVariable String dayWeek) {
         Classroom classroom = classroomService.findByClassName(className);
         DayOfWeek day = dayOfWeekService.findByDayOfWeek(dayWeek);
@@ -70,7 +70,7 @@ public class ScheduleController {
      * @param id - schedule entity id
      * @return - ResponseEntity with the given body and status code
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public ResponseEntity<ScheduleResponseDto> getOne(@PathVariable Long id) {
         final ScheduleResponseDto scheduleResponseDto = mapper.map(scheduleService.findById(id), ScheduleResponseDto.class);
         return new ResponseEntity<>(scheduleResponseDto, HttpStatus.OK);
@@ -82,7 +82,7 @@ public class ScheduleController {
      * @param scheduleRequestDto - the body of the web request
      * @return - ResponseEntity with the given body and status code
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<ScheduleResponseDto> save(@Valid @RequestBody ScheduleRequestDto scheduleRequestDto) {
         scheduleRequestDto.setId(null);
         final ScheduleResponseDto scheduleResponseDto = mapper.map(scheduleService.save(getSchedule(scheduleRequestDto)), ScheduleResponseDto.class);
@@ -96,7 +96,7 @@ public class ScheduleController {
      * @param id                 - schedule entity id
      * @return - ResponseEntity with the given body and status code
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public ResponseEntity<ScheduleResponseDto> update(@Valid @RequestBody ScheduleRequestDto scheduleRequestDto, @PathVariable Long id) {
         if (!Objects.equals(id, scheduleRequestDto.getId())) {
             throw new RuntimeException(localizedMessageSource.getMessage("controller.schedule.unexpectedId", new Object[]{}));
@@ -110,7 +110,7 @@ public class ScheduleController {
      *
      * @param id - schedule entity id
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void delete(@PathVariable Long id) {
         scheduleService.deleteById(id);

@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
@@ -35,6 +37,8 @@ class UserServiceImplTest {
     private RoleService roleService;
     @Mock
     private LocalizedMessageSource localizedMessageSource;
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     @Test
     void findAll() {
@@ -72,11 +76,13 @@ class UserServiceImplTest {
     @Test
     void save() {
         final User user = new User();
-        final Set<Role> roleSet = getRoles();
-        user.setRoles(roleSet);
-        when(userRepository.saveAndFlush(user)).thenReturn(user);
-        when(roleService.findById(1L)).thenReturn(roleSet.iterator().next());
-        assertEquals(userService.save(user), user);
+        final Role role = new Role();
+        role.setId(1L);
+        final Set<Role> roles = Collections.singleton(role);
+        user.setRoles(roles);
+        when(userRepository.saveAndFlush(any(User.class))).thenReturn(user);
+        when(roleService.findById(anyLong())).thenReturn(role);
+        assertEquals(user, userService.save(user));
     }
 
     @Test
@@ -85,9 +91,9 @@ class UserServiceImplTest {
         user.setId(1L);
         final Set<Role> roleSet = getRoles();
         user.setRoles(roleSet);
-        when(userRepository.saveAndFlush(user)).thenReturn(user);
         when(roleService.findById(1L)).thenReturn(roleSet.iterator().next());
         when(userRepository.findById(any(Long.class))).thenReturn(Optional.of(user));
+        when(userRepository.saveAndFlush(user)).thenReturn(user);
         assertEquals(userService.update(user), user);
     }
 
