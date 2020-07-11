@@ -58,10 +58,6 @@ class ScheduleServiceImplTest {
     }
 
     @Test
-    void findScheduleByClassroomAndDayOfWeek() {
-    }
-
-    @Test
     void save() {
         final Schedule schedule = new Schedule();
         final Discipline discipline = new Discipline();
