@@ -24,16 +24,33 @@ public class TeacherServiceImpl implements TeacherService {
     final UserService userService;
     final TeacherRepository teacherRepository;
 
+    /**
+     * Finds all Sin entities
+     *
+     * @return - List of Sin entities
+     */
     @Override
     public List<Teacher> findAll() {
         return teacherRepository.findAll();
     }
 
+    /**
+     * Finds the Teacher entity with the given id
+     *
+     * @param id - Teacher entity id
+     * @return - Teacher entity
+     */
     @Override
     public Teacher findById(Long id) {
         return teacherRepository.findById(id).orElseThrow(() -> new RuntimeException(localizedMessageSource.getMessage("error.teacher.notExist", new Object[]{})));
     }
 
+    /**
+     * Saves a given teacher entity
+     *
+     * @param teacher - teacher Entity
+     * @return - the saved teacher entity
+     */
     @Override
     public Teacher save(Teacher teacher) {
         validate(teacher.getId() != null, localizedMessageSource.getMessage("error.teacher.notHaveId", new Object[]{}));
@@ -41,6 +58,12 @@ public class TeacherServiceImpl implements TeacherService {
         return saveAndFlush(teacher);
     }
 
+    /**
+     * Updates a teacher entity and flushes changes instantly
+     *
+     * @param teacher - teacher entity
+     * @return - the updated teacher entity
+     */
     @Override
     public Teacher update(Teacher teacher) {
         final Long id = teacher.getId();
@@ -52,14 +75,24 @@ public class TeacherServiceImpl implements TeacherService {
         return saveAndFlush(teacher);
     }
 
+    /**
+     * Deletes a given teacher entity
+     *
+     * @param teacher - teacher entity
+     */
     @Override
     public void delete(Teacher teacher) {
         final Long id = teacher.getId();
         validate(id == null, localizedMessageSource.getMessage("error.teacher.haveId", new Object[]{}));
-       findById(id);
+        findById(id);
         teacherRepository.delete(teacher);
     }
 
+    /**
+     * Deletes the teacher entity with the given id
+     *
+     * @param id - teacher entity id
+     */
     @Override
     public void deleteById(Long id) {
         findById(id);

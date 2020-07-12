@@ -24,6 +24,20 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
     private final UserDetailsService userDetailsService;
 
+    /**
+     * Gets token from request. Validates it. Loads User by username from token. Creates Authentication object with all
+     * necessary data and registries it SecurityContext.
+     *
+     * <p>Invokes filter chain once per request within a single request thread that stores a request attribute for
+     * "already filtered", proceeding without filtering again if the attribute is already there.
+     *
+     * @param httpRequest         - the request to pass along the filter chain (a HttpServletRequest object)
+     * @param httpServletResponse - the response to pass along the chain (a HttpServletResponse object)
+     * @param chain               - a FilterChain object
+     * @throws ServletException - if an exception has occurred that interferes with
+     *                          the filterChain's normal operation
+     * @throws IOException      - if an I/O related error has occurred during the processing
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest httpRequest, HttpServletResponse httpServletResponse, FilterChain chain) throws IOException, ServletException {
         String token = getToken(httpRequest);

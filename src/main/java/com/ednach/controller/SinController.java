@@ -30,6 +30,11 @@ public class SinController {
     private final LocalizedMessageSource localizedMessageSource;
     private final SchoolboyService schoolboyService;
 
+    /**
+     * Finds all Sin entities
+     *
+     * @return - ResponseEntity with the given body and status code
+     */
     @GetMapping
     public ResponseEntity<List<SinProjectionResponseDto>> getAll() {
         final List<SinProjection> sins = sinService.findAll();
@@ -39,6 +44,12 @@ public class SinController {
         return new ResponseEntity<>(sinResponseDtoList, HttpStatus.OK);
     }
 
+    /**
+     * Finds sin entity by id and maps it to DTO
+     *
+     * @param id - classroom entity id
+     * @return - ResponseEntity with the given body and status code
+     */
     @GetMapping(value = "/schoolboy/{id}")
     public ResponseEntity<List<SinResponseDto>> getAllSinByType(@PathVariable Long id) {
         Schoolboy schoolboy = schoolboyService.findById(id);
@@ -49,12 +60,24 @@ public class SinController {
         return new ResponseEntity<>(sinResponseDtoList, HttpStatus.OK);
     }
 
+    /**
+     * Finds sin entity by id and maps it to DTO
+     *
+     * @param id - sin entity id
+     * @return - ResponseEntity with the given body and status code
+     */
     @GetMapping(value = "/{id}")
     public ResponseEntity<SinResponseDto> getOne(@PathVariable Long id) {
         final SinResponseDto sinResponseDto = mapper.map(sinService.findById(id), SinResponseDto.class);
         return new ResponseEntity<>(sinResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Saves sin entity with transferred parameters and maps it to DTO
+     *
+     * @param sinRequestDto - the body of the web request
+     * @return - ResponseEntity with the given body and status code
+     */
     @PostMapping
     public ResponseEntity<SinResponseDto> save(@Valid @RequestBody SinRequestDto sinRequestDto) {
         sinRequestDto.setId(null);
@@ -62,6 +85,13 @@ public class SinController {
         return new ResponseEntity<>(sinResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Updates sin entity with transferred parameters by entities id and maps it to DTO
+     *
+     * @param sinRequestDto - the body of the web request
+     * @param id                  - sin entity id
+     * @return - ResponseEntity with the given body and status code
+     */
     @PutMapping(value = "/{id}")
     public ResponseEntity<SinResponseDto> update(@Valid @RequestBody SinRequestDto sinRequestDto, @PathVariable Long id) {
         if (!Objects.equals(id, sinRequestDto.getId())) {
@@ -71,6 +101,11 @@ public class SinController {
         return new ResponseEntity<>(sinResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Deletes sin entity by its id
+     *
+     * @param id - sin entity id
+     */
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void delete(@PathVariable Long id) {
@@ -88,6 +123,12 @@ public class SinController {
         return sin;
     }
 
+    /**
+     * create SinProjectionResponseDto entity for response
+     *
+     * @param sinProjection - the body of the SinProjection
+     * @return - SinProjectionResponseDto with the given body
+     */
     private SinProjectionResponseDto convertFromSinProjection(SinProjection sinProjection) {
         SinProjectionResponseDto sinProjectionResponseDto = new SinProjectionResponseDto();
         UserResponseDto userResponseDto = new UserResponseDto();

@@ -26,33 +26,68 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
 
+    /**
+     * Finds all User entities
+     *
+     * @return - List of User entities
+     */
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
+    /**
+     * Finds the User entity with the given id
+     *
+     * @param id - User entity id
+     * @return - User entity
+     */
     @Override
     public User findById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException(localizedMessageSource.getMessage("error.user.notExist", new Object[]{})));
     }
 
+    /**
+     * Finds all User entities
+     *
+     * @param firstName - User entity firstName
+     * @return - List of User entities
+     */
     @Override
     public List<User> findByFirstName(String firstName) {
         return userRepository.findByFirstName(firstName);
     }
 
+    /**
+     * Finds the User entity with the given email
+     *
+     * @param email - User entity email
+     * @return - User entity
+     */
     @Override
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
+    /**
+     * Saves a given user entity
+     *
+     * @param user - user Entity
+     * @return - the saved user entity
+     */
     @Override
     public User save(User user) {
         validate(user.getId() != null, localizedMessageSource.getMessage("error.user.notHaveId", new Object[]{}));
-        validate(userRepository.existsByEmail(user.getEmail()),localizedMessageSource.getMessage("error.user.email.notUnique",new Object[]{}));
+        validate(userRepository.existsByEmail(user.getEmail()), localizedMessageSource.getMessage("error.user.email.notUnique", new Object[]{}));
         return saveAndFlush(user);
     }
 
+    /**
+     * Updates a user entity and flushes changes instantly
+     *
+     * @param user - user entity
+     * @return - the updated user entity
+     */
     @Override
     public User update(User user) {
         final Long id = user.getId();
@@ -64,6 +99,11 @@ public class UserServiceImpl implements UserService {
         return saveAndFlush(user);
     }
 
+    /**
+     * Deletes a given user entity
+     *
+     * @param user - user entity
+     */
     @Override
     public void delete(User user) {
         final Long id = user.getId();
@@ -72,6 +112,11 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
     }
 
+    /**
+     * Deletes the user entity with the given id
+     *
+     * @param id - user entity id
+     */
     @Override
     public void deleteById(Long id) {
         findById(id);

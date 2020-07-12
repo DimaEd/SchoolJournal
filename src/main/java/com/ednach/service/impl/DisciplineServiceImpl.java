@@ -25,16 +25,33 @@ public class DisciplineServiceImpl implements DisciplineService {
     final LocalizedMessageSource localizedMessageSource;
     final TeacherService teacherService;
 
+    /**
+     * Finds all Discipline entities
+     *
+     * @return - List of Discipline entities
+     */
     @Override
     public List<Discipline> findAll() {
         return disciplineRepository.findAll();
     }
 
+    /**
+     * Finds the Discipline entity with the given id
+     *
+     * @param id - Discipline entity id
+     * @return - Discipline entity
+     */
     @Override
     public Discipline findById(Long id) {
         return disciplineRepository.findById(id).orElseThrow(() -> new RuntimeException(localizedMessageSource.getMessage("error.discipline.notExist", new Object[]{})));
     }
 
+    /**
+     * Saves a given discipline entity
+     *
+     * @param discipline - discipline Entity
+     * @return - the saved discipline entity
+     */
     @Override
     public Discipline save(Discipline discipline) {
         validate(discipline.getId() != null, localizedMessageSource.getMessage("error.discipline.notHaveId", new Object[]{}));
@@ -42,6 +59,12 @@ public class DisciplineServiceImpl implements DisciplineService {
         return saveAndFlush(discipline);
     }
 
+    /**
+     * Updates a discipline entity and flushes changes instantly
+     *
+     * @param discipline - discipline entity
+     * @return - the updated discipline entity
+     */
     @Override
     public Discipline update(Discipline discipline) {
         final Long id = discipline.getId();
@@ -54,6 +77,11 @@ public class DisciplineServiceImpl implements DisciplineService {
         return saveAndFlush(discipline);
     }
 
+    /**
+     * Deletes a given discipline entity
+     *
+     * @param discipline - discipline entity
+     */
     @Override
     public void delete(Discipline discipline) {
         final Long id = discipline.getId();
@@ -64,6 +92,11 @@ public class DisciplineServiceImpl implements DisciplineService {
 
     }
 
+    /**
+     * Deletes the discipline entity with the given id
+     *
+     * @param id - discipline entity id
+     */
     @Override
     public void deleteById(Long id) {
         findById(id);

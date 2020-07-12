@@ -8,17 +8,20 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * Provides core user information related to user's authentication
+ */
 @AllArgsConstructor
 public class AuthenticationUserDetails implements UserDetails {
 
     @Getter
-    private Long id;
+    private final Long id;
 
-    private String username;
+    private final String username;
 
-    private String password;
+    private final String password;
 
-    private Collection<? extends GrantedAuthority> authorities;
+    private final Collection<? extends GrantedAuthority> authorities;
 
 
     @Override

@@ -26,43 +26,75 @@ public class SchoolboyServiceImpl implements SchoolboyService {
     final ClassroomService classroomService;
     final LocalizedMessageSource localizedMessageSource;
 
+    /**
+     * Finds all Schoolboy entities
+     *
+     * @return - List of Schoolboy entities
+     */
     @Override
     public List<SchoolboyProjection> findAll() {
         return schoolboyRepository.findAllCustom();
     }
 
-
+    /**
+     * Finds the Schoolboy entity with the given id
+     *
+     * @param id - Schoolboy entity id
+     * @return - Schoolboy entity
+     */
     @Override
     public Schoolboy findById(Long id) {
         return schoolboyRepository.findById(id).orElseThrow(() -> new RuntimeException(localizedMessageSource.getMessage("error.schoolboy.notExist", new Object[]{})));
     }
 
+    /**
+     * Saves a given schoolboy entity
+     *
+     * @param schoolboy - schoolboy Entity
+     * @return - the saved schoolboy entity
+     */
     @Override
     public Schoolboy save(Schoolboy schoolboy) {
         validate(schoolboy.getId() != null, localizedMessageSource.getMessage("error.schoolboy.notHaveId", new Object[]{}));
-       validate(schoolboyRepository.existsByUser(schoolboy.getUser()), localizedMessageSource.getMessage("error.schoolboy.user.notUnique", new Object[]{}));
+        validate(schoolboyRepository.existsByUser(schoolboy.getUser()), localizedMessageSource.getMessage("error.schoolboy.user.notUnique", new Object[]{}));
         return saveAndFlush(schoolboy);
     }
 
+    /**
+     * Updates a schoolbo entity and flushes changes instantly
+     *
+     * @param schoolboy - schoolboy entity
+     * @return - the updated schoolboy entity
+     */
     @Override
     public Schoolboy update(Schoolboy schoolboy) {
         final Long id = schoolboy.getId();
         validate(id == null, localizedMessageSource.getMessage("error.schoolboy.haveId", new Object[]{}));
         final Schoolboy duplicateSchoolboy = schoolboyRepository.findByUser(schoolboy.getUser());
         final boolean isDuplicateExists = duplicateSchoolboy != null && !Objects.equals(duplicateSchoolboy.getId(), id);
-       findById(id);
+        findById(id);
         validate(isDuplicateExists, localizedMessageSource.getMessage("error.schoolboy.user.notUnique", new Object[]{}));
         return saveAndFlush(schoolboy);
     }
 
+    /**
+     * Deletes a given schoolboy entity
+     *
+     * @param schoolboy - schoolboy entity
+     */
     @Override
     public void delete(Schoolboy schoolboy) {
         final Long id = schoolboy.getId();
         validate(schoolboy.getId() == null, localizedMessageSource.getMessage("error.schoolboy.haveId", new Object[]{}));
-       findById(id);
+        findById(id);
         schoolboyRepository.delete(schoolboy);
     }
 
+    /**
+     * Deletes the schoolboy entity with the given id
+     *
+     * @param id - schoolboy entity id
+     */
     @Override
     public void deleteById(Long id) {
         findById(id);

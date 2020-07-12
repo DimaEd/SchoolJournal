@@ -27,35 +27,68 @@ public class SinServiceImpl implements SinService {
     final SchoolboyService schoolboyService;
     final TeacherService teacherService;
 
-
-
+    /**
+     * Finds all Sin entities
+     *
+     * @param schoolboy - Sin entity schoolboy
+     * @return - List of Sin entities
+     */
     @Override
     public List<Sin> findBySchoolboy(Schoolboy schoolboy) {
         return sinRepository.findBySchoolboy(schoolboy);
     }
 
+    /**
+     * Finds all Sin entities
+     *
+     * @return - List of Sin entities
+     */
     @Override
     public List<SinProjection> findAll() {
         return sinRepository.findAllCustom();
     }
 
+    /**
+     * Finds the Sin entity with the given typeSin
+     *
+     * @param typeSin - Sin entity typeSin
+     * @return - List of Sin entities
+     */
     @Override
     public List<Sin> findAllByTypeSin(String typeSin) {
         return sinRepository.findByTypeSin(typeSin);
     }
 
+    /**
+     * Finds the Sin entity with the given id
+     *
+     * @param id - Sin entity id
+     * @return - Sin entity
+     */
     @Override
     public Sin findById(Long id) {
         return sinRepository.findById(id).orElseThrow(() -> new RuntimeException(localizedMessageSource.getMessage("error.sin.notExist", new Object[]{})));
 
     }
 
+    /**
+     * Saves a given sin entity
+     *
+     * @param sin - sin Entity
+     * @return - the saved sin entity
+     */
     @Override
     public Sin save(Sin sin) {
         validate(sin.getId() != null, localizedMessageSource.getMessage("error.sin.notHaveId", new Object[]{}));
         return saveAndFlush(sin);
     }
 
+    /**
+     * Updates a sin entity and flushes changes instantly
+     *
+     * @param sin - sin entity
+     * @return - the updated sin entity
+     */
     @Override
     public Sin update(Sin sin) {
         final Long id = sin.getId();
@@ -64,6 +97,11 @@ public class SinServiceImpl implements SinService {
         return saveAndFlush(sin);
     }
 
+    /**
+     * Deletes a given sin entity
+     *
+     * @param sin - sin entity
+     */
     @Override
     public void delete(Sin sin) {
         final Long id = sin.getId();
@@ -72,6 +110,11 @@ public class SinServiceImpl implements SinService {
         sinRepository.delete(sin);
     }
 
+    /**
+     * Deletes the sin entity with the given id
+     *
+     * @param id - sin entity id
+     */
     @Override
     public void deleteById(Long id) {
         findById(id);

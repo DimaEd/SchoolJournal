@@ -26,6 +26,11 @@ public class TeacherController {
     private final TeacherService teacherService;
     private final LocalizedMessageSource localizedMessageSource;
 
+    /**
+     * Finds all Teacher entities
+     *
+     * @return - ResponseEntity with the given body and status code
+     */
     @GetMapping
     public ResponseEntity<List<TeacherResponseDto>> getAll() {
         final List<Teacher> teachers = teacherService.findAll();
@@ -35,12 +40,24 @@ public class TeacherController {
         return new ResponseEntity<>(teacherDtoList, HttpStatus.OK);
     }
 
+    /**
+     * Finds teacher entity by id and maps it to DTO
+     *
+     * @param id - teacher entity id
+     * @return - ResponseEntity with the given body and status code
+     */
     @GetMapping(value = "/{id}")
     public ResponseEntity<TeacherResponseDto> getOne(@PathVariable Long id) {
         final TeacherResponseDto teacherDto = mapper.map(teacherService.findById(id), TeacherResponseDto.class);
         return new ResponseEntity<>(teacherDto, HttpStatus.OK);
     }
 
+    /**
+     * Saves teacher entity with transferred parameters and maps it to DTO
+     *
+     * @param teacherRequestDto - the body of the web request
+     * @return - ResponseEntity with the given body and status code
+     */
     @PostMapping
     public ResponseEntity<TeacherResponseDto> save(@Valid @RequestBody TeacherRequestDto teacherRequestDto) {
         teacherRequestDto.setId(null);
@@ -48,6 +65,13 @@ public class TeacherController {
         return new ResponseEntity<>(teacherDto, HttpStatus.OK);
     }
 
+    /**
+     * Updates teacher entity with transferred parameters by entities id and maps it to DTO
+     *
+     * @param teacherRequestDto - the body of the web request
+     * @param id                  - teacher entity id
+     * @return - ResponseEntity with the given body and status code
+     */
     @PutMapping(value = "/{id}")
     public ResponseEntity<TeacherResponseDto> update(@Valid @RequestBody TeacherRequestDto teacherRequestDto, @PathVariable Long id) {
         if (!Objects.equals(id, teacherRequestDto.getId())) {
@@ -57,6 +81,11 @@ public class TeacherController {
         return new ResponseEntity<>(teacherDto, HttpStatus.OK);
     }
 
+    /**
+     * Deletes teacher entity by its id
+     *
+     * @param id - teacher entity id
+     */
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void delete(@PathVariable Long id) {

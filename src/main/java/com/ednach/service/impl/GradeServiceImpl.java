@@ -27,51 +27,90 @@ public class GradeServiceImpl implements GradeService {
     final DisciplineService disciplineService;
     final LocalizedMessageSource localizedMessageSource;
 
+    /**
+     * Finds all Grade entities
+     *
+     * @return - List of Grade entities
+     */
     @Override
     public List<Grade> findAll() {
         return gradeRepository.findAll();
     }
 
+    /**
+     * Finds the Grade entity with the given id
+     *
+     * @param id - Grade entity id
+     * @return - Grade entity
+     */
     @Override
     public Grade findById(Long id) {
         return gradeRepository.findById(id).orElseThrow(() -> new RuntimeException(localizedMessageSource.getMessage("error.grade.notExist", new Object[]{})));
     }
 
+    /**
+     * Finds all Grade entity with the given schoolboy
+     *
+     * @param schoolboy - Grade entity schoolboy
+     * @return - Grade entity
+     */
     @Override
-    public List<Grade> findBySchoolboy(Schoolboy b) {
-        return gradeRepository.findBySchoolboy(b);
+    public List<Grade> findBySchoolboy(Schoolboy schoolboy) {
+        return gradeRepository.findBySchoolboy(schoolboy);
     }
 
+    /**
+     * Saves a given grade entity
+     *
+     * @param grade - grade Entity
+     * @return - the saved grade entity
+     */
     @Override
     public Grade save(Grade grade) {
         validate(grade.getId() != null, localizedMessageSource.getMessage("error.grade.notHaveId", new Object[]{}));
         return gradeRepository.saveAndFlush(grade);
     }
 
+    /**
+     * Updates a grade entity and flushes changes instantly
+     *
+     * @param grade - grade entity
+     * @return - the updated grade entity
+     */
     @Override
     public Grade update(Grade grade) {
         final Long id = grade.getId();
         validate(id == null, localizedMessageSource.getMessage("error.grade.haveId", new Object[]{}));
         findById(id);
-         return saveAndFlush(grade);
+        return saveAndFlush(grade);
     }
 
+    /**
+     * Deletes the grade entity with the given id
+     *
+     * @param id - grade entity id
+     */
     @Override
     public void deleteById(Long id) {
         findById(id);
         gradeRepository.deleteById(id);
     }
 
+    /**
+     * Deletes a given grade entity
+     *
+     * @param grade - grade entity
+     */
     @Override
     public void delete(Grade grade) {
         final Long id = grade.getId();
         validate(grade.getId() == null, localizedMessageSource.getMessage("error.grade.haveId", new Object[]{}));
-       findById(id);
+        findById(id);
         gradeRepository.delete(grade);
     }
 
     private Grade saveAndFlush(Grade grade) {
-        validate(grade.getTeacher() == null|| grade.getTeacher().getId()==null, localizedMessageSource.getMessage("error.grade.teacher.isNull", new Object[]{}));
+        validate(grade.getTeacher() == null || grade.getTeacher().getId() == null, localizedMessageSource.getMessage("error.grade.teacher.isNull", new Object[]{}));
         validate(grade.getSchoolboy() == null || (grade.getSchoolboy().getId() == null), localizedMessageSource.getMessage("error.grade.user.isNull", new Object[]{}));
         validate(grade.getDiscipline() == null || (grade.getDiscipline().getId() == null), localizedMessageSource.getMessage("error.grade.discipline.isNull", new Object[]{}));
         grade.setDiscipline(disciplineService.findById(grade.getDiscipline().getId()));
@@ -80,8 +119,9 @@ public class GradeServiceImpl implements GradeService {
         return gradeRepository.saveAndFlush(grade);
 
     }
-    private void validate(boolean expression, String errorMessage){
-        if(expression){
+
+    private void validate(boolean expression, String errorMessage) {
+        if (expression) {
             throw new RuntimeException(errorMessage);
         }
     }

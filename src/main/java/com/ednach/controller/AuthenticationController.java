@@ -33,6 +33,12 @@ public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
     private final Mapper mapper;
 
+    /**
+     * Authenticate User and grants token, required to access the system
+     *
+     * @param userSignInRequestDto - the body of the web request
+     * @return - valid token
+     */
     @PostMapping("/signIn")
     public TokenResponseDto authenticateUser(@Valid @RequestBody UserSingInRequestDto userSignInRequestDto) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userSignInRequestDto.getEmail(), userSignInRequestDto.getPassword());
@@ -41,11 +47,23 @@ public class AuthenticationController {
         return new TokenResponseDto(tokenService.generate(authentication));
     }
 
+    /**
+     * Refreshes existing token
+     *
+     * @param token - current token
+     * @return - new token
+     */
     @PostMapping("/refresh")
     public TokenResponseDto refreshToken(@RequestParam String token) {
         return new TokenResponseDto(tokenService.refresh(token));
     }
 
+    /**
+     * Saves User entity with transferred parameters
+     *
+     * @param userRegistrationRequestDTO - the body of the web request
+     * @return - ResponseEntity with the given body and status code
+     */
     @PostMapping("/signUp")
     public UserResponseDto registerUser(@Valid @RequestBody UserRegistrationRequestDto userRegistrationRequestDTO) {
         final User user = new User();

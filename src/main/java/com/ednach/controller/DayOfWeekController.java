@@ -20,6 +20,11 @@ public class DayOfWeekController {
     private final Mapper mapper;
     private final DayOfWeekService dayOfWeekService;
 
+    /**
+     * Finds all Day entities
+     *
+     * @return - ResponseEntity with the given body and status code
+     */
     @GetMapping
     public ResponseEntity<List<DayOfWeekDto>> getAll() {
         final List<DayOfWeek> dayOfWeeks = dayOfWeekService.findAll();
@@ -28,6 +33,13 @@ public class DayOfWeekController {
                 .collect(Collectors.toList());
         return new ResponseEntity<>(dayOfWeekDtoList, HttpStatus.OK);
     }
+
+    /**
+     * Finds day entity by id and maps it to DTO
+     *
+     * @param id - classroom entity id
+     * @return - ResponseEntity with the given body and status code
+     */
     @GetMapping(value = "/{id}")
     public ResponseEntity<DayOfWeekDto> getOne(@PathVariable Long id) {
         final DayOfWeekDto dayOfWeekDto = mapper.map(dayOfWeekService.findById(id), DayOfWeekDto.class);

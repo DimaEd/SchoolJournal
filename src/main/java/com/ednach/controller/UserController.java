@@ -27,6 +27,11 @@ public class UserController {
     private final UserService userService;
     private final LocalizedMessageSource localizedMessageSource;
 
+    /**
+     * Finds all User entities
+     *
+     * @return - ResponseEntity with the given body and status code
+     */
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> getAll() {
         final List<User> users = userService.findAll();
@@ -36,8 +41,14 @@ public class UserController {
         return new ResponseEntity<>(userResponseDtoList, HttpStatus.OK);
     }
 
+    /**
+     * Finds user entity by id and maps it to DTO
+     *
+     * @param firstName - user entity firstName
+     * @return - ResponseEntity with the given body and status code
+     */
     @GetMapping(value = "firstName")
-    public ResponseEntity<List<UserResponseDto>> getAllByFirstName(@RequestParam(value="firstName") String firstName) {
+    public ResponseEntity<List<UserResponseDto>> getAllByFirstName(@RequestParam(value = "firstName") String firstName) {
         final List<User> users = userService.findByFirstName(firstName);
         final List<UserResponseDto> userResponseDtoList = users.stream()
                 .map((user) -> mapper.map(user, UserResponseDto.class))
@@ -45,11 +56,24 @@ public class UserController {
         return new ResponseEntity<>(userResponseDtoList, HttpStatus.OK);
     }
 
+    /**
+     * Finds user entity by id and maps it to DTO
+     *
+     * @param id - user entity id
+     * @return - ResponseEntity with the given body and status code
+     */
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserResponseDto> getOne(@PathVariable Long id) {
         final UserResponseDto userResponseDto = mapper.map(userService.findById(id), UserResponseDto.class);
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
+
+    /**
+     * Saves user entity with transferred parameters and maps it to DTO
+     *
+     * @param userRequestDto - the body of the web request
+     * @return - ResponseEntity with the given body and status code
+     */
     @PostMapping
     public ResponseEntity<UserResponseDto> save(@Valid @RequestBody UserRequestDto userRequestDto) {
         userRequestDto.setId(null);
@@ -57,6 +81,13 @@ public class UserController {
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Updates user entity with transferred parameters by entities id and maps it to DTO
+     *
+     * @param userRequestDto - the body of the web request
+     * @param id             - user entity id
+     * @return - ResponseEntity with the given body and status code
+     */
     @PutMapping(value = "/{id}")
     public ResponseEntity<UserResponseDto> update(@Valid @RequestBody UserRequestDto userRequestDto, @PathVariable Long id) {
         if (!Objects.equals(id, userRequestDto.getId())) {
@@ -66,6 +97,11 @@ public class UserController {
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Deletes user entity by its id
+     *
+     * @param id - user entity id
+     */
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void delete(@PathVariable Long id) {

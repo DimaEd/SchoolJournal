@@ -5,6 +5,7 @@ import com.ednach.service.TeacherService;
 import com.ednach.component.LocalizedMessageSource;
 import com.ednach.model.Classroom;
 import com.ednach.service.ClassroomService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,18 +16,13 @@ import java.util.Optional;
 /**
  * Implementation of service interface for Classroom entity
  */
+@RequiredArgsConstructor
 @Service
 @Transactional
 public class ClassroomServiceImpl implements ClassroomService {
     final ClassroomRepository classroomRepository;
     final LocalizedMessageSource localizedMessageSource;
     final TeacherService teacherService;
-
-    public ClassroomServiceImpl(ClassroomRepository classroomRepository, LocalizedMessageSource localizedMessageSource, TeacherService teacherService) {
-        this.classroomRepository = classroomRepository;
-        this.localizedMessageSource = localizedMessageSource;
-        this.teacherService = teacherService;
-    }
 
     /**
      * Finds all classroom entities

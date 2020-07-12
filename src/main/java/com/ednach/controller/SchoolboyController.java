@@ -31,6 +31,11 @@ public class SchoolboyController {
     private final LocalizedMessageSource localizedMessageSource;
     private final SchoolboyService schoolboyService;
 
+    /**
+     * Finds all Schoolboy entities
+     *
+     * @return - ResponseEntity with the given body and status code
+     */
     @GetMapping
     public ResponseEntity<List<SchoolboyProjectionResponseDto>> getAll() {
         final List<SchoolboyProjection> schoolboys = schoolboyService.findAll();
@@ -40,12 +45,24 @@ public class SchoolboyController {
         return new ResponseEntity<>(schoolboyResponseDtoList, HttpStatus.OK);
     }
 
+    /**
+     * Finds schoolboy entity by id and maps it to DTO
+     *
+     * @param id - schoolboy entity id
+     * @return - ResponseEntity with the given body and status code
+     */
     @GetMapping(value = "/{id}")
     public ResponseEntity<SchoolboyResponseDto> getOne(@PathVariable Long id) {
         final SchoolboyResponseDto schoolboyResponseDto = mapper.map(schoolboyService.findById(id), SchoolboyResponseDto.class);
         return new ResponseEntity<>(schoolboyResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Saves schoolboy entity with transferred parameters and maps it to DTO
+     *
+     * @param schoolboyRequestDto - the body of the web request
+     * @return - ResponseEntity with the given body and status code
+     */
     @PostMapping
     public ResponseEntity<SchoolboyResponseDto> save(@Valid @RequestBody SchoolboyRequestDto schoolboyRequestDto) {
         schoolboyRequestDto.setId(null);
@@ -53,6 +70,13 @@ public class SchoolboyController {
         return new ResponseEntity<>(schoolboyResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Updates schoolboy entity with transferred parameters by entities id and maps it to DTO
+     *
+     * @param schoolboyRequestDto - the body of the web request
+     * @param id                  - schoolboy entity id
+     * @return - ResponseEntity with the given body and status code
+     */
     @PutMapping(value = "/{id}")
     public ResponseEntity<SchoolboyResponseDto> update(@Valid @RequestBody SchoolboyRequestDto schoolboyRequestDto, @PathVariable Long id) {
         if (!Objects.equals(id, schoolboyRequestDto.getId())) {
@@ -62,6 +86,11 @@ public class SchoolboyController {
         return new ResponseEntity<>(schoolboyResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Deletes schoolboy entity by its id
+     *
+     * @param id - schoolboy entity id
+     */
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void delete(@PathVariable Long id) {
@@ -79,6 +108,13 @@ public class SchoolboyController {
         schoolboy.setUser(user);
         return schoolboy;
     }
+
+    /**
+     * create SchoolboyProjectionResponseDto entity for response
+     *
+     * @param schoolboyProjection - the body of the SchoolboyProjection
+     * @return - schoolboyProjectionResponseDto with the given body
+     */
     private SchoolboyProjectionResponseDto convertFromSchoolboyProjection(SchoolboyProjection schoolboyProjection) {
         SchoolboyProjectionResponseDto schoolboyProjectionResponseDto = new SchoolboyProjectionResponseDto();
         UserResponseDto userResponseDto = new UserResponseDto();

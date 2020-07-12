@@ -13,6 +13,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Configuration class of security components.
+ */
 @RequiredArgsConstructor
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -21,6 +24,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final TokenService tokenService;
     private final UserDetailsService userDetailsService;
 
+    /**
+     * Creates Bean from AuthenticationManager that processes an authentication request
+     *
+     * @return - AuthenticationManager
+     * @throws Exception - checked exceptions
+     */
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {

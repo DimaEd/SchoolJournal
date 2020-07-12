@@ -28,11 +28,22 @@ public class WebConfig {
         return new DozerBeanMapper();
     }
 
+    /**
+     * Create Bean from service interface for encoding passwords
+     *
+     * @return - BCryptPasswordEncoder.
+     * Implementation of PasswordEncoder that uses the BCrypt.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Creates Bean that generates views by setted parameters
+     *
+     * @return - InternalResourceViewResolver instance
+     */
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
