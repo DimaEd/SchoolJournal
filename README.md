@@ -12,6 +12,7 @@ as well as the ability to store and analyze assessments and misconduct of studen
 6. Logging
 7. DTO
 8. Database H2
-9. Swagger
+9. Flyway database migration
+10. Swagger
 
 app is verified by SonarLint

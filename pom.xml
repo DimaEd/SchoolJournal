@@ -33,6 +33,8 @@
         <jjwt>0.9.1</jjwt>
         <swagger2>2.9.2</swagger2>
         <swagger-ui>2.9.2</swagger-ui>
+        <flyway-core.version>5.0.2</flyway-core.version>
+        <flyway-maven-plugin.version>5.0.2</flyway-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -186,6 +188,11 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${swagger-ui}</version>
         </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway-core.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -196,6 +203,23 @@
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>${flyway-maven-plugin.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>${com.h2.driver}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>

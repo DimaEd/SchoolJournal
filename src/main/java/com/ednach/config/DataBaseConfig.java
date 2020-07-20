@@ -1,5 +1,6 @@
 package com.ednach.config;
 
+import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
@@ -20,11 +21,10 @@ import java.util.Properties;
 /**
  * Database configuration class
  */
-@PropertySource("classpath:database.properties")
+@PropertySource("classpath:application.properties")
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = {
-        "com.ednach.repository"
-})
+        "com.ednach.repository"})
 public class DataBaseConfig {
 
     @Value("${connection.driver_class}")
@@ -32,6 +32,9 @@ public class DataBaseConfig {
 
     @Value("${connection.url}")
     private String url;
+
+    @Value("${schemas}")
+    private String schemas;
 
     /**
      * creates a dataSource for connections database
@@ -41,7 +44,19 @@ public class DataBaseConfig {
     @Bean
     public DataSource dataSource() {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        return builder.setType(EmbeddedDatabaseType.H2).addScript("/start.sql").build();
+        return builder.setType(EmbeddedDatabaseType.H2).build();
+    }
+
+    /**
+     * creates a flyway for create database
+     *
+     * @return flyway object
+     */
+    @Bean(initMethod = "migrate", name = "flyway")
+    public Flyway getFlyWay() {
+        Flyway flyway = new Flyway();
+        flyway.setDataSource(dataSource());
+        return flyway;
     }
 
     /**
@@ -49,6 +64,7 @@ public class DataBaseConfig {
      *
      * @return - LocalContainerEntityManagerFactoryBean object
      */
+
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -80,9 +96,9 @@ public class DataBaseConfig {
      */
     private Properties additionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "validate");
-        properties.setProperty("hibernate.show_sql", "true");
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+        properties.setProperty("spring.jpa.hibernate.ddl.auto", "validate");
+        properties.setProperty("spring.jpa.hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+        properties.setProperty("spring.jpa.show-sql", "true");
         return properties;
     }
 }
