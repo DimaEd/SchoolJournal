@@ -1,4 +1,3 @@
-
 INSERT INTO roles VALUES (1,'ROLE_TEACHER'),(2,'ROLE_PARENT'),(3,'ROLE_SCHOOLBOY'),(4,'ROLE_ADMIN');
 
 INSERT INTO users VALUES (1,'Moroz','Pavel','morozPavel@mail.ru','$2a$10$l/D6AGt8vYJG.cW/lIT44uy.TAYkV9UYJ8bPuGKBwuva/ERc9Ct4K'),(2,'Petrova','Maria','petrovaMaria@mail.ru','$2a$10$l/D6AGt8vYJG.cW/lIT44uy.TAYkV9UYJ8bPuGKBwuva/ERc9Ct4K'),(3,'Gausa','Irina','gausaIrina@mail.ru',''),(4,'Moroz','Vala','morozGala@mail.ru',''),(8,'Ednach','Dmitry','ednachDmitry@mail.ru',''),(9,'Ivanov','Roma','ivanovRoma@mail.ru','$2a$10$l/D6AGt8vYJG.cW/lIT44uy.TAYkV9UYJ8bPuGKBwuva/ERc9Ct4K');

@@ -1,10 +1,9 @@
-package unit.service;
+package com.ednach.service;
 
 import com.ednach.component.LocalizedMessageSource;
 import com.ednach.model.Role;
 import com.ednach.model.User;
 import com.ednach.repository.UserRepository;
-import com.ednach.service.RoleService;
 import com.ednach.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +19,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;

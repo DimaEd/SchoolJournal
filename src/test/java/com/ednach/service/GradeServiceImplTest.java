@@ -1,4 +1,4 @@
-package unit.service;
+package com.ednach.service;
 
 import com.ednach.component.LocalizedMessageSource;
 import com.ednach.model.Discipline;
@@ -6,9 +6,6 @@ import com.ednach.model.Grade;
 import com.ednach.model.Schoolboy;
 import com.ednach.model.Teacher;
 import com.ednach.repository.GradeRepository;
-import com.ednach.service.DisciplineService;
-import com.ednach.service.SchoolboyService;
-import com.ednach.service.TeacherService;
 import com.ednach.service.impl.GradeServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +17,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;

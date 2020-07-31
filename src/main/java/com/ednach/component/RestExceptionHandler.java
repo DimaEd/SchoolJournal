@@ -1,4 +1,4 @@
-package com.ednach.config;
+package com.ednach.component;
 
 import com.ednach.dto.response.ErrorResponseDto;
 import org.slf4j.Logger;

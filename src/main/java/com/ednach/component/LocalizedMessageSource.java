@@ -14,8 +14,8 @@ import java.util.Locale;
 @Component
 public class LocalizedMessageSource {
 
-    private List<Locale> localeList = Arrays.asList(new Locale("ru"), new Locale("en"));
-    private MessageSource messageSource;
+     private final List<Locale> localeList = Arrays.asList(new Locale("ru"), new Locale("en"));
+     private final MessageSource messageSource;
     LocalizedMessageSource(MessageSource messageSource) {
         this.messageSource = messageSource;
     }
