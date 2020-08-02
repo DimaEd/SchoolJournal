@@ -7,12 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -24,9 +25,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @Transactional
+@WithMockUser(roles={"ADMIN"})
 class SinControllerTest {
 
-    public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
+    public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), StandardCharsets.UTF_8);
 
     @Autowired
     private MockMvc mockMvc;
@@ -55,7 +57,7 @@ class SinControllerTest {
         mockMvc.perform(get("/sins/5"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.message").value("Sin doesn't exist!"))
+                .andExpect(jsonPath("$.message").value("Проступок не существует!"))
                 .andReturn();
     }
 
@@ -91,7 +93,7 @@ class SinControllerTest {
         mockMvc.perform(put("/sins/7").contentType(APPLICATION_JSON_UTF8).content("{\"id\":7,\"typeSin\":\"hooky\",\"points\":7,\"teacherId\":2,\"schoolboyId\":1}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.message").value("Sin doesn't exist!"))
+                .andExpect(jsonPath("$.message").value("Проступок не существует!"))
                 .andReturn();
     }
 
@@ -127,7 +129,7 @@ class SinControllerTest {
         mockMvc.perform(delete("/sins/5"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.message").value("Sin doesn't exist!"))
+                .andExpect(jsonPath("$.message").value("Проступок не существует!"))
                 .andReturn();
     }
 }

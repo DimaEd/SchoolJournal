@@ -10,7 +10,7 @@ INSERT INTO sin VALUES (1,'fight',5,1,1);
 
 INSERT INTO classroom VALUES (1,'10A',1),(2,'11B',2);
 
-INSERT INTO dayofweek VALUES (1,'monday'),(2,'tuesday'),(3,'wednesday'),(4,'thursday'),(5,'friday');
+INSERT INTO day_of_week VALUES (1,'monday'),(2,'tuesday'),(3,'wednesday'),(4,'thursday'),(5,'friday');
 
 INSERT INTO disciplines VALUES (1,'english',1),(2,'maths',2),(3,'biology',1),(4,'russian',1),(5,'physics',1);
 

@@ -8,8 +8,8 @@ CREATE TABLE roles (
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   id bigint(8) NOT NULL AUTO_INCREMENT,
-  firstName varchar(45) NOT NULL,
-  lastName varchar(45) NOT NULL,
+  first_Name varchar(45) NOT NULL,
+  last_Name varchar(45) NOT NULL,
   email varchar(50) NOT NULL,
   password varchar(100) NOT NULL,
   PRIMARY KEY (id)
@@ -33,7 +33,7 @@ user_id bigint(8) NOT NULL,
 DROP TABLE IF EXISTS sin;
 CREATE TABLE sin (
   id bigint(8)  NOT NULL AUTO_INCREMENT,
-  typeSin varchar(45) NOT NULL,
+  type_Sin varchar(45) NOT NULL,
   points bigint(8) NOT NULL,
   teacher_id bigint(8) NOT NULL,
   schoolboy_id bigint(8) NOT NULL,
@@ -43,13 +43,13 @@ CREATE TABLE sin (
 DROP TABLE IF EXISTS classroom;
 CREATE TABLE classroom (
   id bigint(8) NOT NULL AUTO_INCREMENT,
-  className varchar(45) NOT NULL,
+  class_Name varchar(45) NOT NULL,
   teacher_id bigint(8) NOT NULL,
   PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS dayofweek;
-CREATE TABLE dayOfWeek (
+DROP TABLE IF EXISTS day_Of_Week;
+CREATE TABLE day_Of_Week (
   id bigint(8) NOT NULL AUTO_INCREMENT,
   day varchar(45) NOT NULL,
   PRIMARY KEY (id),
@@ -58,7 +58,7 @@ CREATE TABLE dayOfWeek (
 DROP TABLE IF EXISTS disciplines;
 CREATE TABLE disciplines (
   id bigint(8) NOT NULL AUTO_INCREMENT,
-  nameSubject varchar(45) NOT NULL,
+  name_Subject varchar(45) NOT NULL,
   teachers_id bigint(8) NOT NULL,
   PRIMARY KEY (id)
 );
@@ -79,7 +79,7 @@ CREATE TABLE schedule (
   id bigint(8) NOT NULL AUTO_INCREMENT,
   classroom_id bigint(8) NOT NULL,
   discipline_id bigint(8) NOT NULL,
-  dayOfWeek_id bigint(8) NOT NULL,
+  day_Of_Week_id bigint(8) NOT NULL,
   PRIMARY KEY (id)
 );
 

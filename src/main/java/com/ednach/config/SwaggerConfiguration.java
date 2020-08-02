@@ -2,6 +2,7 @@ package com.ednach.config;
 
 import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.PathSelectors;
@@ -20,6 +21,7 @@ import java.util.List;
 /**
  * Configuration of Swagger 2
  */
+@Configuration
 @EnableSwagger2
 public class SwaggerConfiguration implements WebMvcConfigurer {
 

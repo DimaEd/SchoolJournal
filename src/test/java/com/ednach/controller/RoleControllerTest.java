@@ -13,7 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -25,15 +25,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @Transactional
+@WithMockUser(roles={"ADMIN"})
 class RoleControllerTest {
 
-    public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
+    public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), StandardCharsets.UTF_8);
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    @WithMockUser(roles={"ADMIN"})
     void getAll() throws Exception {
         mockMvc.perform(get("/roles"))
                 .andDo(print())
@@ -44,7 +44,6 @@ class RoleControllerTest {
     }
 
     @Test
-    @WithMockUser(roles={"ADMIN"})
     void getOneExist() throws Exception {
         mockMvc.perform(get("/roles/1"))
                 .andDo(print())
@@ -54,7 +53,6 @@ class RoleControllerTest {
     }
 
     @Test
-    @WithMockUser(roles={"ADMIN"})
     void getOneNotExist() throws Exception {
         mockMvc.perform(get("/roles/5"))
                 .andDo(print())
@@ -64,7 +62,6 @@ class RoleControllerTest {
     }
 
     @Test
-    @WithMockUser(roles={"ADMIN"})
     void testSaveExistBadRequest() throws Exception {
         mockMvc.perform(post("/roles").contentType(APPLICATION_JSON_UTF8).content("{\"name\":\"ROLE_PARENT\"}"))
                 .andDo(print())
@@ -74,7 +71,6 @@ class RoleControllerTest {
     }
 
     @Test
-    @WithMockUser(roles={"ADMIN"})
     void testSaveHaveIdBadRequest() throws Exception {
         mockMvc.perform(post("/roles").contentType(APPLICATION_JSON_UTF8).content("{\"id\":3,\"name\":\"ROLE_SUPERTACHER"))
                 .andDo(print())
@@ -83,7 +79,6 @@ class RoleControllerTest {
     }
 
     @Test
-    @WithMockUser(roles={"ADMIN"})
     void save() throws Exception {
         mockMvc.perform(post("/roles").contentType(APPLICATION_JSON_UTF8).content("{\"name\":\"ROLE_SUPERBOSS\"}"))
                 .andDo(print())
@@ -94,7 +89,6 @@ class RoleControllerTest {
 
 
     @Test
-    @WithMockUser(roles={"ADMIN"})
     void testPutOneBadRequest() throws Exception {
         mockMvc.perform(put("/roles/1").contentType(APPLICATION_JSON_UTF8).content("{\"id\":2,\"name\":\"ROLE_BOSS\"}"))
                 .andDo(print())
@@ -104,7 +98,6 @@ class RoleControllerTest {
     }
 
     @Test
-    @WithMockUser(roles={"ADMIN"})
     void testPutOneNotExist() throws Exception {
         mockMvc.perform(put("/roles/5").contentType(APPLICATION_JSON_UTF8).content("{\"id\":5,\"name\":\"ROLE_BOSS\"}"))
                 .andDo(print())
@@ -115,7 +108,6 @@ class RoleControllerTest {
 
 
     @Test
-    @WithMockUser(roles={"ADMIN"})
     void testPutIdNullBadRequest() throws Exception {
         mockMvc.perform(put("/roles/2").contentType(APPLICATION_JSON_UTF8).content("{\"name\":\"ROLE_SUPERTEACHER\"}"))
                 .andDo(print())
@@ -125,7 +117,6 @@ class RoleControllerTest {
     }
 
     @Test
-    @WithMockUser(roles={"ADMIN"})
     void testPutOneExist() throws Exception {
         mockMvc.perform(put("/roles/1").contentType(APPLICATION_JSON_UTF8).content("{\"id\":1,\"name\":\"ROLE_PARENT\"}"))
                 .andDo(print())
@@ -135,7 +126,6 @@ class RoleControllerTest {
     }
 
     @Test
-    @WithMockUser(roles={"ADMIN"})
     void update() throws Exception {
         mockMvc.perform(put("/roles/1").contentType(APPLICATION_JSON_UTF8).content("{\"id\":1,\"name\":\"ROLE_SUPERTEACHER\"}"))
                 .andDo(print())
@@ -145,7 +135,6 @@ class RoleControllerTest {
     }
 
     @Test
-    @WithMockUser(roles={"ADMIN"})
     void testDeleteExist() throws Exception {
         mockMvc.perform(get("/roles/2"))
                 .andDo(print())
@@ -154,7 +143,6 @@ class RoleControllerTest {
     }
 
     @Test
-    @WithMockUser(roles={"ADMIN"})
     void testDeleteNotExist() throws Exception {
         mockMvc.perform(delete("/roles/5"))
                 .andDo(print())

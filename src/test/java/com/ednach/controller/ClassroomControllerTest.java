@@ -13,7 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -25,16 +25,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @Transactional
-
+@WithMockUser(roles = {"ADMIN"})
 class ClassroomControllerTest {
 
-    public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
+    public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), StandardCharsets.UTF_8);
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    @WithMockUser(roles={"ADMIN"})
+    @WithMockUser(roles = {"ADMIN"})
     void getAll() throws Exception {
         mockMvc.perform(get("/classrooms"))
                 .andDo(print())
@@ -54,7 +54,7 @@ class ClassroomControllerTest {
     }
 
     @Test
-     void testGetOneNotExist() throws Exception {
+    void testGetOneNotExist() throws Exception {
         mockMvc.perform(get("/classrooms/3"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -63,15 +63,16 @@ class ClassroomControllerTest {
     }
 
     @Test
-     void testSaveExistBadRequest() throws Exception {
+    void testSaveExistBadRequest() throws Exception {
         mockMvc.perform(post("/classrooms").contentType(APPLICATION_JSON_UTF8).content("{\"className\":\"10A\",\"teacherId\":1}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
                 .andExpect(jsonPath("$.message").value("Classroom name is not unique!"))
                 .andReturn();
     }
+
     @Test
-     void testSaveHaveIdBadRequest() throws Exception {
+    void testSaveHaveIdBadRequest() throws Exception {
         mockMvc.perform(post("/classrooms/3").contentType(APPLICATION_JSON_UTF8).content("{\"id\":3,\"className\":\"10A\",\"teacherId\":1}"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError())
@@ -79,7 +80,7 @@ class ClassroomControllerTest {
     }
 
     @Test
-    void save()  throws Exception {
+    void save() throws Exception {
         mockMvc.perform(post("/classrooms").contentType(APPLICATION_JSON_UTF8).content("{\"className\":\"7A\",\"teacherId\":2}"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -107,7 +108,7 @@ class ClassroomControllerTest {
 
 
     @Test
-     void testPutIdNullBadRequest() throws Exception {
+    void testPutIdNullBadRequest() throws Exception {
         mockMvc.perform(put("/classrooms/2").contentType(APPLICATION_JSON_UTF8).content("{\"className\":\"7A\",\"teacherId\":2}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -116,7 +117,7 @@ class ClassroomControllerTest {
     }
 
     @Test
-     void testPutOneExist() throws Exception {
+    void testPutOneExist() throws Exception {
         mockMvc.perform(put("/classrooms/1").contentType(APPLICATION_JSON_UTF8).content("{\"id\":1,\"className\":\"11B\",\"teacherId\":2}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
@@ -125,15 +126,16 @@ class ClassroomControllerTest {
     }
 
     @Test
-    void update()  throws Exception {
+    void update() throws Exception {
         mockMvc.perform(put("/classrooms/1").contentType(APPLICATION_JSON_UTF8).content("{\"id\":1,\"className\":\"7B\",\"teacherId\":2}"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.className").value("7B"))
                 .andReturn();
     }
+
     @Test
-     void testDeleteExist() throws Exception {
+    void testDeleteExist() throws Exception {
         mockMvc.perform(get("/classrooms/2"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -141,7 +143,7 @@ class ClassroomControllerTest {
     }
 
     @Test
-     void testDeleteNotExist() throws Exception {
+    void testDeleteNotExist() throws Exception {
         mockMvc.perform(delete("/classrooms/5"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
