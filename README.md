@@ -14,6 +14,7 @@ as well as the ability to store and analyze assessments and misconduct of studen
 8. Database H2
 9. Flyway database migration
 10. Swagger
-11. Spring boot with Maven
+11. Spring boot with Maven(in the SpringBootMaven branch)
+12. Spring boot with Gradle(in the SpringBootGradle branch)
 
-app is verified by SonarLint
+app was verified by SonarLint
