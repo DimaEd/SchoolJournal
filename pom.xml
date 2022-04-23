@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.9</maven.compiler.source>
         <maven.compiler.target>1.9</maven.compiler.target>
-        <org.spring.core>5.1.5.RELEASE</org.spring.core>
+        <org.spring.core>5.3.19</org.spring.core>
         <org.spring.data>2.1.8.RELEASE</org.spring.data>
         <org.spring.security>5.2.1.RELEASE</org.spring.security>
         <hibernate.entitymanager>5.4.2.Final</hibernate.entitymanager>
