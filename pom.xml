@@ -21,7 +21,7 @@
         <com.h2.driver>1.4.197</com.h2.driver>
         <javax.servlet>4.0.1</javax.servlet>
         <javax.jstl>1.2</javax.jstl>
-        <jackson.core>2.9.9</jackson.core>
+        <jackson.core>2.12.6.1</jackson.core>
         <hibernate.validator>6.0.16.Final</hibernate.validator>
         <dozer>5.5.1</dozer>
         <logback>1.2.3</logback>
